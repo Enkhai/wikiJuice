@@ -18,18 +18,13 @@ namespace WindowsFormsApp1
 {
     class Generator : Bot //Inherit DotNetWikiBot Bot class
     {
-
         public static void generate(string user, string pass, Dictionary<string, int> searchItems, List<string> categories)
         {
             //Make Site object, specifying site's URL and your bot account
             Site enWiki = new Site("https://en.wikipedia.org", user, pass);
 
             GetPageMultipleData(enWiki, searchItems, categories);
-
-            //Dir_.SetDirectory("Database"); //Delete this later. The functions below will
-                                      //only be implented inside the bigger function GetPageMultipleData
-            //GetPageSearchData(enWiki, searchItem: "Java", searchResults: 10);
-            //GetPageSearchData(enWiki, category_switch: true, category: "Computer science");         
+      
         }
 
 
@@ -139,19 +134,17 @@ namespace WindowsFormsApp1
             //using a foreach section
             List<string> images = page.GetImages();
 
-            //In order to download anything initialize a WebClient like this
-            using (WebClient client = new WebClient())
+
+            foreach (string img in images)
             {
-                foreach (string img in images)
-                {
-                    DownloadImage(img, page.title);
-                }
+                DownloadImage(img, page.title);
             }
         }
 
         //Downloads image <img> from Wikipedia inside the images folder of folder <page_title>
         public static async void DownloadImage(string img, string page_title)
         {
+            //In order to download anything initialize a WebClient like this
             using (WebClient client = new WebClient())
             {
                 //Make sure there are two dashes in directories (special characters)
