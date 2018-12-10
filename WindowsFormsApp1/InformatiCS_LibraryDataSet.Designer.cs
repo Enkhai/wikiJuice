@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace GetLemmaApp {
+namespace WindowsFormsApp1 {
     
     
     /// <summary>
@@ -4066,7 +4066,7 @@ namespace GetLemmaApp {
         }
     }
 }
-namespace GetLemmaApp.InformatiCS_LibraryDataSetTableAdapters {
+namespace WindowsFormsApp1.InformatiCS_LibraryDataSetTableAdapters {
     
     
     /// <summary>
@@ -4229,7 +4229,7 @@ namespace GetLemmaApp.InformatiCS_LibraryDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::GetLemmaApp.Properties.Settings.Default.MyConnectionString;
+            this._connection.ConnectionString = global::WindowsFormsApp1.Properties.Settings.Default.InformatiCS_LibraryConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4569,7 +4569,7 @@ namespace GetLemmaApp.InformatiCS_LibraryDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::GetLemmaApp.Properties.Settings.Default.MyConnectionString;
+            this._connection.ConnectionString = global::WindowsFormsApp1.Properties.Settings.Default.InformatiCS_LibraryConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4990,7 +4990,7 @@ namespace GetLemmaApp.InformatiCS_LibraryDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::GetLemmaApp.Properties.Settings.Default.MyConnectionString;
+            this._connection.ConnectionString = global::WindowsFormsApp1.Properties.Settings.Default.InformatiCS_LibraryConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5003,10 +5003,10 @@ namespace GetLemmaApp.InformatiCS_LibraryDataSetTableAdapters {
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT COUNT(*) FROM Category_Lemma WHERE LemmaID = ? AND CategoryID = ?";
+            this._commandCollection[1].CommandText = "SELECT COUNT(*) FROM Category_Lemma WHERE CategoryID = ? AND LemmaID = ?";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("LemmaID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "LemmaID", global::System.Data.DataRowVersion.Current, false, null));
             this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("CategoryID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CategoryID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("LemmaID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "LemmaID", global::System.Data.DataRowVersion.Current, false, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5144,10 +5144,10 @@ namespace GetLemmaApp.InformatiCS_LibraryDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual global::System.Nullable<int> CategoryLemmaExist(int LemmaID, int CategoryID) {
+        public virtual global::System.Nullable<int> CategoryLemmaExist(int CategoryID, int LemmaID) {
             global::System.Data.OleDb.OleDbCommand command = this.CommandCollection[1];
-            command.Parameters[0].Value = ((int)(LemmaID));
-            command.Parameters[1].Value = ((int)(CategoryID));
+            command.Parameters[0].Value = ((int)(CategoryID));
+            command.Parameters[1].Value = ((int)(LemmaID));
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5315,7 +5315,7 @@ namespace GetLemmaApp.InformatiCS_LibraryDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::GetLemmaApp.Properties.Settings.Default.MyConnectionString;
+            this._connection.ConnectionString = global::WindowsFormsApp1.Properties.Settings.Default.InformatiCS_LibraryConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5606,7 +5606,7 @@ namespace GetLemmaApp.InformatiCS_LibraryDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::GetLemmaApp.Properties.Settings.Default.MyConnectionString;
+            this._connection.ConnectionString = global::WindowsFormsApp1.Properties.Settings.Default.InformatiCS_LibraryConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5908,7 +5908,7 @@ namespace GetLemmaApp.InformatiCS_LibraryDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::GetLemmaApp.Properties.Settings.Default.MyConnectionString;
+            this._connection.ConnectionString = global::WindowsFormsApp1.Properties.Settings.Default.InformatiCS_LibraryConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6329,7 +6329,7 @@ namespace GetLemmaApp.InformatiCS_LibraryDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::GetLemmaApp.Properties.Settings.Default.MyConnectionString;
+            this._connection.ConnectionString = global::WindowsFormsApp1.Properties.Settings.Default.InformatiCS_LibraryConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6666,7 +6666,7 @@ namespace GetLemmaApp.InformatiCS_LibraryDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::GetLemmaApp.Properties.Settings.Default.MyConnectionString;
+            this._connection.ConnectionString = global::WindowsFormsApp1.Properties.Settings.Default.InformatiCS_LibraryConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7078,7 +7078,7 @@ namespace GetLemmaApp.InformatiCS_LibraryDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::GetLemmaApp.Properties.Settings.Default.MyConnectionString;
+            this._connection.ConnectionString = global::WindowsFormsApp1.Properties.Settings.Default.InformatiCS_LibraryConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
