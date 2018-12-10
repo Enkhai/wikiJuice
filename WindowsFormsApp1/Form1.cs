@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Text;
+using static WindowsFormsApp1.consoleWriters;
 
 namespace WindowsFormsApp1
 {
@@ -17,12 +18,13 @@ namespace WindowsFormsApp1
         public Form1()
         {
             InitializeComponent();
-            infoLabel.Text= "wikiJuice version 0.1" + Environment.NewLine +
+            infoTB.Text = "wikiJuice version 0.1" + Environment.NewLine +
                 "A source wikipedia" + Environment.NewLine +
                 "database creation tool." + Environment.NewLine +
                 "Part of the InformatiCS-Library" + Environment.NewLine +
-                "application." + Environment.NewLine +
-                Environment.NewLine + "~Enkhai";           
+                "application.";
+
+            Console.SetOut(new MultiTextWriter(new ControlWriter(StatusTB), Console.Out));
         }
 
         private void categoryButton_Click(object sender, EventArgs e)

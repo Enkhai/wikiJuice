@@ -29,16 +29,13 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.generateButton = new System.Windows.Forms.Button();
             this.usernameTB = new System.Windows.Forms.TextBox();
             this.passwordTB = new System.Windows.Forms.TextBox();
             this.StatusTB = new System.Windows.Forms.TextBox();
-            this.ImageStatusTB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.infoLabel = new System.Windows.Forms.Label();
             this.categoryList = new System.Windows.Forms.ListBox();
             this.searchList = new System.Windows.Forms.ListView();
             this.SearchValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -55,15 +52,9 @@
             this.search_deleteButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.button1 = new System.Windows.Forms.Button();
+            this.infoTB = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(34, 195);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(705, 23);
-            this.progressBar1.TabIndex = 0;
             // 
             // generateButton
             // 
@@ -93,21 +84,16 @@
             // 
             // StatusTB
             // 
-            this.StatusTB.Location = new System.Drawing.Point(34, 236);
+            this.StatusTB.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.StatusTB.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StatusTB.ForeColor = System.Drawing.SystemColors.Window;
+            this.StatusTB.Location = new System.Drawing.Point(34, 207);
             this.StatusTB.Multiline = true;
             this.StatusTB.Name = "StatusTB";
             this.StatusTB.ReadOnly = true;
-            this.StatusTB.Size = new System.Drawing.Size(358, 155);
+            this.StatusTB.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.StatusTB.Size = new System.Drawing.Size(613, 184);
             this.StatusTB.TabIndex = 4;
-            // 
-            // ImageStatusTB
-            // 
-            this.ImageStatusTB.Location = new System.Drawing.Point(420, 236);
-            this.ImageStatusTB.Multiline = true;
-            this.ImageStatusTB.Name = "ImageStatusTB";
-            this.ImageStatusTB.ReadOnly = true;
-            this.ImageStatusTB.Size = new System.Drawing.Size(319, 155);
-            this.ImageStatusTB.TabIndex = 5;
             // 
             // label1
             // 
@@ -137,15 +123,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
-            // 
-            // infoLabel
-            // 
-            this.infoLabel.AutoSize = true;
-            this.infoLabel.Location = new System.Drawing.Point(647, 87);
-            this.infoLabel.Name = "infoLabel";
-            this.infoLabel.Size = new System.Drawing.Size(0, 13);
-            this.infoLabel.TabIndex = 9;
-            this.infoLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // categoryList
             // 
@@ -269,7 +246,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(214, 396);
+            this.button1.Location = new System.Drawing.Point(469, 397);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(178, 23);
             this.button1.TabIndex = 22;
@@ -277,12 +254,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // infoTB
+            // 
+            this.infoTB.Location = new System.Drawing.Point(680, 130);
+            this.infoTB.Multiline = true;
+            this.infoTB.Name = "infoTB";
+            this.infoTB.ReadOnly = true;
+            this.infoTB.Size = new System.Drawing.Size(118, 195);
+            this.infoTB.TabIndex = 23;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.infoTB);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.search_deleteButton);
             this.Controls.Add(this.cat_deleteButton);
@@ -296,16 +283,13 @@
             this.Controls.Add(this.categoryButton);
             this.Controls.Add(this.searchList);
             this.Controls.Add(this.categoryList);
-            this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.ImageStatusTB);
             this.Controls.Add(this.StatusTB);
             this.Controls.Add(this.passwordTB);
             this.Controls.Add(this.usernameTB);
             this.Controls.Add(this.generateButton);
-            this.Controls.Add(this.progressBar1);
             this.Name = "Form1";
             this.Text = "wikiJuice: A Wikipedia source database generator";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -315,17 +299,13 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Button generateButton;
         private System.Windows.Forms.TextBox usernameTB;
         private System.Windows.Forms.TextBox passwordTB;
         private System.Windows.Forms.TextBox StatusTB;
-        private System.Windows.Forms.TextBox ImageStatusTB;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label infoLabel;
         private System.Windows.Forms.ListBox categoryList;
         private System.Windows.Forms.ListView searchList;
         private System.Windows.Forms.ColumnHeader SearchValue;
@@ -342,6 +322,7 @@
         private System.Windows.Forms.Button search_deleteButton;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox infoTB;
     }
 }
 
