@@ -74,5 +74,11 @@ namespace WindowsFormsApp1
             }
             catch { }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            folderBrowserDialog1.ShowDialog();
+            Dir_.SetDirectory(folderBrowserDialog1.SelectedPath);
+        }
     }        
 }
