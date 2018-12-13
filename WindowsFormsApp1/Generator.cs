@@ -18,27 +18,76 @@ namespace WindowsFormsApp1
 {
     class Generator : Bot //Inherit DotNetWikiBot Bot class
     {
-        public static void generate(string user, string pass, Dictionary<string, int> searchItems, List<string> categories)
-        {
-            //Make Site object, specifying site's URL and your bot account
-            Site enWiki = new Site("https://en.wikipedia.org", user, pass);
+        private static int generations = 0;
+        private static string report = "";
 
-            GetPageMultipleData(enWiki, searchItems, categories);
-      
+        public static int getGenerations() { return generations; }
+
+        public static string getReport() { return report; }
+        
+        public static void reset() { generations = 0; report = ""; }
+
+        private static void makeReport(string user)
+        {
+            report = "**wikiJuice report**" + Environment.NewLine +
+                $"Logged in as {user}" + Environment.NewLine +
+                "Date: " + DateTime.Now.ToString() + Environment.NewLine +
+                "Author: " + Environment.UserName + Environment.NewLine +
+                Environment.NewLine + 
+                "------------------------------------------------------------------" +
+                Environment.NewLine;
         }
 
+        public static void saveReport(string path = null)
+        {
+            if (path == null)
+            {
+                path = Directory.GetCurrentDirectory();
+            }
+            File.WriteAllText("Report.txt", report);
+        }
+
+        //Generates a database from Wikipedia based on Wikipedia user, password, a dictionairy of 
+        //search items and a list of categories
+        public static void generate(string user, string pass, Dictionary<string, int> searchItems, List<string> categories)
+        {
+            reset();
+            Console.WriteLine("Generator has been reset");
+
+            Site enWiki = new Site("https://en.wikipedia.org", user, pass);
+            makeReport(user);
+
+            Dir_.SetDirectory("Database");
+                        
+            GetPageMultipleData(enWiki, searchItems, categories);
+
+            report += Environment.NewLine + Environment.NewLine +
+                "------------------------------------------------------------------" +
+                Environment.NewLine + Environment.NewLine + 
+                $"Number of successfully generated pages: {generations}" +
+                Environment.NewLine + $"Number of successfully downloaded images: " +
+                Environment.NewLine + $"Number of unsuccessfully downloaded images: ";
+            
+            saveReport();
+            Console.WriteLine("Report has been saved");
+        }
 
         //Stores page data based on desired search items and categories
         public static void GetPageMultipleData(Site wiki, Dictionary<string, int> searchItems, List<string> categories)
         {
-            Dir_.SetDirectory("Database");
+            report += Environment.NewLine + "**Getting report for search items: **" + Environment.NewLine;
 
             foreach (KeyValuePair<string, int> searchItem in searchItems)
             {
+                report += Environment.NewLine + $">{searchItem.Key} ({searchItem.Value}):" + Environment.NewLine;
                 GetPageSearchData(wiki, searchItem: searchItem.Key, searchResults: searchItem.Value);
             }
+
+            report += Environment.NewLine + "**Getting report for categories: **" + Environment.NewLine;
+
             foreach (string category in categories)
             {
+                report += Environment.NewLine + $">{category}:" + Environment.NewLine + Environment.NewLine;
                 GetPageSearchData(wiki, category_switch: true, category: category);
             }
         }
@@ -85,35 +134,37 @@ namespace WindowsFormsApp1
                 {
                     foreach (Page p in pl)
                     {
-                        bool skip = false;
+                        //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
+                        p.title = p.title.Replace("/", "-");
+                        Console.WriteLine($"\nWorking on page {p.title}");
+
                         //I need to make a JSON category index from this
                         List<string> categories = p.GetCategories();
 
-                        Console.WriteLine($"\nWorking on page: {p.title}");
+                        report += $"*{p.title}: ";
 
                         //Skip if page is like Portal:, File:, Category:, etc
                         if (p.title.Contains(":"))
                         {
-                            skip = true;
+                            Console.WriteLine("Page has been ignored");
+                            report+= "ignored" + Environment.NewLine;
                         }
                         else
-                        {
-                            //Try to create wiki page directory if not already crated
+                        {                            
+                            //Try to create wiki page directory if not already created
                             Dir_.CreateDirectory(p.title);
-                        }
 
-                        if (!skip)
-                        {
-                            Console.WriteLine($"Saving wikitext file of {p.title}");
-                            p.SaveToFile($"{p.title}\\{p.title}.wikitext");
-                            Console.WriteLine($"Formatting {p.title} file wikitext to plain text");
+                            try
+                            {
+                                p.SaveToFile($"{p.title}\\{p.title}.wikitext");
+                            }
+                            catch { }
                             sw.WriteLine($"pandoc -f mediawiki -t plain -o \"{p.title}\\{p.title}\" \"{p.title}\\{p.title}.wikitext\" ");
+                            Console.WriteLine($"Text of page {p.title} has been formatted");
                             DownloadImages(p);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Wikipedia page is irrelevant. " +
-                            "Download process and formatting of the text will be skipped.");
+
+                            report += "accepted" + Environment.NewLine;
+                            generations += 1;
                         }
                     }
                 }
@@ -167,7 +218,7 @@ namespace WindowsFormsApp1
                     {
                         string img_name = img.Replace("File:", "");
                         await client.DownloadFileTaskAsync(img_src, $"{page_title}//images//{img_name}");
-                        Console.WriteLine($"Image {img} downloaded as {img_name} in folder {page_title}//Images");
+                        Console.WriteLine($"Image {img} downloaded as {img_name} in folder {page_title}/Images");
                     }
                 }
                 catch

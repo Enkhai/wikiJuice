@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace WindowsFormsApp1
 {
     class Misc
-    {
+    {       
         //Save a JObject to a specified file with an optional path
         public static void SaveJObjectToFile(JObject json, string name, string path = null)
         {

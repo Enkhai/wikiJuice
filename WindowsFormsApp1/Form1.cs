@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Text;
 using static WindowsFormsApp1.consoleWriters;
+using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
@@ -24,7 +25,7 @@ namespace WindowsFormsApp1
                 "Part of the InformatiCS-Library" + Environment.NewLine +
                 "application.";
 
-            Console.SetOut(new MultiTextWriter(new ControlWriter(StatusTB), Console.Out));
+            //Console.SetOut(new MultiTextWriter(new ControlWriter(StatusTB), Console.Out));
         }
 
         private void categoryButton_Click(object sender, EventArgs e)
@@ -64,6 +65,8 @@ namespace WindowsFormsApp1
 
         private void generateButton_Click(object sender, EventArgs e)
         {
+            StatusTB.Clear();
+
             Dictionary<string, int> searchItems = new Dictionary<string, int> { };
             List<string> categories = new List<string> { };
 
@@ -72,7 +75,7 @@ namespace WindowsFormsApp1
                 foreach (ListViewItem item in searchList.Items) { searchItems.Add(item.SubItems[0].Text, Int32.Parse(item.SubItems[1].Text)); }
                 foreach (string item in categoryList.Items) { categories.Add(item); };
 
-                Generator.generate("Enkhai", "Pe4heQui", searchItems, categories);
+                Generator.generate(usernameTB.Text, passwordTB.Text, searchItems, categories);
             }
             catch { }
         }
