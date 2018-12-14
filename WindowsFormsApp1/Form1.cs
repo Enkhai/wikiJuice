@@ -66,6 +66,7 @@ namespace WindowsFormsApp1
         private void generateButton_Click(object sender, EventArgs e)
         {
             StatusTB.Clear();
+            StatusTB.Text = "Working...";
 
             Dictionary<string, int> searchItems = new Dictionary<string, int> { };
             List<string> categories = new List<string> { };
@@ -76,6 +77,7 @@ namespace WindowsFormsApp1
                 foreach (string item in categoryList.Items) { categories.Add(item); };
 
                 Generator.generate(usernameTB.Text, passwordTB.Text, searchItems, categories);
+                StatusTB.Text = Generator.getReport();
             }
             catch { }
         }
