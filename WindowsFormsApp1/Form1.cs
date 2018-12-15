@@ -77,9 +77,13 @@ namespace WindowsFormsApp1
                 foreach (string item in categoryList.Items) { categories.Add(item); };
 
                 Generator.generate(usernameTB.Text, passwordTB.Text, searchItems, categories);
-                StatusTB.Text = Generator.getReport();
             }
             catch { }
+
+            foreach(var value in Generator.getReport().Values)
+            {
+                StatusTB.Text+=value;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

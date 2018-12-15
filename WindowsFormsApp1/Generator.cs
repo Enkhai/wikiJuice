@@ -19,23 +19,23 @@ namespace WindowsFormsApp1
     class Generator : Bot //Inherit DotNetWikiBot Bot class
     {
         private static int generations = 0;
-        private static string report = "";
+        private static Dictionary<int, string> reportDict = new Dictionary<int, string> { };
 
         public static int getGenerations() { return generations; }
 
-        public static string getReport() { return report; }
-        
-        public static void reset() { generations = 0; report = ""; }
+        public static Dictionary<int, string> getReport() { return reportDict; }
+
+        public static void reset() { generations = 0; reportDict.Clear(); }
 
         private static void makeReport(string user)
-        {
-            report = "**wikiJuice report**" + Environment.NewLine +
+        {            
+            reportDict.Add(reportDict.Count, Environment.NewLine + "**wikiJuice report**" + Environment.NewLine +
                 $"Logged in as {user}" + Environment.NewLine +
                 "Date: " + DateTime.Now.ToString() + Environment.NewLine +
                 "Author: " + Environment.UserName + Environment.NewLine +
-                Environment.NewLine + 
+                Environment.NewLine +
                 "------------------------------------------------------------------" +
-                Environment.NewLine;
+                Environment.NewLine);
         }
 
         public static void saveReport(string path = null)
@@ -44,7 +44,7 @@ namespace WindowsFormsApp1
             {
                 path = Directory.GetCurrentDirectory();
             }
-            File.WriteAllText("Report.txt", report);
+            File.WriteAllLines("Report.txt", reportDict.Select(pair => string.Format("{0}", pair.Value)));
         }
 
         //Generates a database from Wikipedia based on Wikipedia user, password, a dictionairy of 
@@ -58,16 +58,16 @@ namespace WindowsFormsApp1
             makeReport(user);
 
             Dir_.SetDirectory("Database");
-                        
+
             GetPageMultipleData(enWiki, searchItems, categories);
 
-            report += Environment.NewLine + Environment.NewLine +
+            reportDict.Add(reportDict.Count, Environment.NewLine + Environment.NewLine +
                 "------------------------------------------------------------------" +
-                Environment.NewLine + Environment.NewLine + 
+                Environment.NewLine + Environment.NewLine +
                 $"Number of successfully generated pages: {generations}" +
                 Environment.NewLine + $"Number of successfully downloaded images: " +
-                Environment.NewLine + $"Number of unsuccessfully downloaded images: ";
-            
+                Environment.NewLine + $"Number of unsuccessfully downloaded images: ");
+
             saveReport();
             Console.WriteLine("Report has been saved");
         }
@@ -75,20 +75,22 @@ namespace WindowsFormsApp1
         //Stores page data based on desired search items and categories
         public static void GetPageMultipleData(Site wiki, Dictionary<string, int> searchItems, List<string> categories)
         {
-            report += Environment.NewLine + "**Getting report for search items: **" + Environment.NewLine;
+            reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for search items: **" + Environment.NewLine);
 
             foreach (KeyValuePair<string, int> searchItem in searchItems)
             {
-                report += Environment.NewLine + $">{searchItem.Key} ({searchItem.Value}):" + Environment.NewLine;
-                GetPageSearchData(wiki, searchItem: searchItem.Key, searchResults: searchItem.Value);
+                reportDict.Add(reportDict.Count, Environment.NewLine + $">{searchItem.Key} ({searchItem.Value}):" + Environment.NewLine);
+                try { GetPageSearchData(wiki, searchItem: searchItem.Key, searchResults: searchItem.Value); }
+                catch { reportDict.Add(reportDict.Count, "Could not yield search results");  }
             }
 
-            report += Environment.NewLine + "**Getting report for categories: **" + Environment.NewLine;
+            reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for categories: **" + Environment.NewLine);
 
             foreach (string category in categories)
             {
-                report += Environment.NewLine + $">{category}:" + Environment.NewLine + Environment.NewLine;
-                GetPageSearchData(wiki, category_switch: true, category: category);
+                reportDict.Add(reportDict.Count, Environment.NewLine + $">{category}:" + Environment.NewLine + Environment.NewLine);
+                try { GetPageSearchData(wiki, category_switch: true, category: category); }
+                catch { reportDict.Add(reportDict.Count, "Category not found"); }
             }
         }
 
@@ -141,16 +143,14 @@ namespace WindowsFormsApp1
                         //I need to make a JSON category index from this
                         List<string> categories = p.GetCategories();
 
-                        report += $"*{p.title}: ";
-
                         //Skip if page is like Portal:, File:, Category:, etc
                         if (p.title.Contains(":"))
                         {
                             Console.WriteLine("Page has been ignored");
-                            report+= "ignored" + Environment.NewLine;
+                            reportDict.Add(reportDict.Count, $"*{p.title}: " + "ignored" + Environment.NewLine);
                         }
                         else
-                        {                            
+                        {
                             //Try to create wiki page directory if not already created
                             Dir_.CreateDirectory(p.title);
 
@@ -163,7 +163,7 @@ namespace WindowsFormsApp1
                             Console.WriteLine($"Text of page {p.title} has been formatted");
                             DownloadImages(p);
 
-                            report += "accepted" + Environment.NewLine;
+                            reportDict.Add(reportDict.Count, $"*{p.title}: " + "accepted" + Environment.NewLine);
                             generations += 1;
                         }
                     }
@@ -226,7 +226,7 @@ namespace WindowsFormsApp1
                     Console.WriteLine("Could not download source file");
                 }
             }
-        } 
+        }
     }
 
 
