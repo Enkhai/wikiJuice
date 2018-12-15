@@ -18,14 +18,23 @@ namespace WindowsFormsApp1
 {
     class Generator : Bot //Inherit DotNetWikiBot Bot class
     {
-        private static int generations = 0;
+        private static int succ_generations = 0;
+        private static int fail_generations = 0;
+        private static int succ_images = 0;
+        private static int fail_images = 0;
         private static Dictionary<int, string> reportDict = new Dictionary<int, string> { };
 
-        public static int getGenerations() { return generations; }
+        public static int getSuccessfulGenerations() { return succ_generations; }
+
+        public static int getIgnoredGenerations() { return fail_generations; }
+        
+        public static int getImageSuccesses() { return succ_images; }
+
+        public static int getImageFailures() { return fail_images; }
 
         public static Dictionary<int, string> getReport() { return reportDict; }
 
-        public static void reset() { generations = 0; reportDict.Clear(); }
+        public static void reset() { succ_generations = 0; fail_generations = 0; reportDict.Clear(); }
 
         private static void makeReport(string user)
         {            
@@ -45,6 +54,8 @@ namespace WindowsFormsApp1
                 path = Directory.GetCurrentDirectory();
             }
             File.WriteAllLines("Report.txt", reportDict.Select(pair => string.Format("{0}", pair.Value)));
+
+            Console.WriteLine("Report has been saved");
         }
 
         //Generates a database from Wikipedia based on Wikipedia user, password, a dictionairy of 
@@ -54,22 +65,22 @@ namespace WindowsFormsApp1
             reset();
             Console.WriteLine("Generator has been reset");
 
-            Site enWiki = new Site("https://en.wikipedia.org", user, pass);
             makeReport(user);
+            try
+            {
+                Site enWiki = new Site("https://en.wikipedia.org", user, pass);
 
-            Dir_.SetDirectory("Database");
+                Dir_.SetDirectory("Database");
 
-            GetPageMultipleData(enWiki, searchItems, categories);
+                GetPageMultipleData(enWiki, searchItems, categories);
+            }
+            catch { Console.WriteLine("User login failed"); }
 
             reportDict.Add(reportDict.Count, Environment.NewLine + Environment.NewLine +
                 "------------------------------------------------------------------" +
                 Environment.NewLine + Environment.NewLine +
-                $"Number of successfully generated pages: {generations}" +
-                Environment.NewLine + $"Number of successfully downloaded images: " +
-                Environment.NewLine + $"Number of unsuccessfully downloaded images: ");
-
-            saveReport();
-            Console.WriteLine("Report has been saved");
+                $"Number of successfully generated pages: {succ_generations}" +
+                Environment.NewLine + $"Number of ignored pages: {fail_generations}");
         }
 
         //Stores page data based on desired search items and categories
@@ -124,10 +135,12 @@ namespace WindowsFormsApp1
                 FileName = "cmd.exe",
                 RedirectStandardInput = true,
                 UseShellExecute = false,
-                WorkingDirectory = Directory.GetCurrentDirectory()
+                WorkingDirectory = Directory.GetCurrentDirectory(),
+                CreateNoWindow = true
             };
 
             proc.StartInfo = info;
+            proc.Exited += new EventHandler(ProcExitHandler);
             proc.Start();
 
             using (StreamWriter sw = proc.StandardInput)
@@ -136,38 +149,48 @@ namespace WindowsFormsApp1
                 {
                     foreach (Page p in pl)
                     {
-                        //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
-                        p.title = p.title.Replace("/", "-");
-                        Console.WriteLine($"\nWorking on page {p.title}");
+                        var t = Task.Run(() => {
+                            //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
+                            p.title = p.title.Replace("/", "-");
+                            Console.WriteLine($"\nWorking on page {p.title}");
 
-                        //I need to make a JSON category index from this
-                        List<string> categories = p.GetCategories();
+                            //I need to make a JSON category index from this
+                            List<string> categories = p.GetCategories();
 
-                        //Skip if page is like Portal:, File:, Category:, etc
-                        if (p.title.Contains(":"))
-                        {
-                            Console.WriteLine("Page has been ignored");
-                            reportDict.Add(reportDict.Count, $"*{p.title}: " + "ignored" + Environment.NewLine);
-                        }
-                        else
-                        {
-                            //Try to create wiki page directory if not already created
-                            Dir_.CreateDirectory(p.title);
-
-                            try
+                            //Skip if page is like Portal:, File:, Category:, etc
+                            if (p.title.Contains(":"))
                             {
-                                p.SaveToFile($"{p.title}\\{p.title}.wikitext");
+                                Console.WriteLine("Page has been ignored");
+                                reportDict.Add(reportDict.Count, $"*{p.title}: " + "ignored" + Environment.NewLine);
+                                fail_generations++;
                             }
-                            catch { }
-                            sw.WriteLine($"pandoc -f mediawiki -t plain -o \"{p.title}\\{p.title}\" \"{p.title}\\{p.title}.wikitext\" ");
-                            Console.WriteLine($"Text of page {p.title} has been formatted");
-                            DownloadImages(p);
+                            else
+                            {
+                                //Try to create wiki page directory if not already created
+                                Dir_.CreateDirectory(p.title);
 
-                            reportDict.Add(reportDict.Count, $"*{p.title}: " + "accepted" + Environment.NewLine);
-                            generations += 1;
-                        }
+                                try
+                                {
+                                    p.SaveToFile($"{p.title}\\{p.title}.wikitext");
+                                }
+                                catch { }
+                                sw.WriteLine($"pandoc -f mediawiki -t plain -o \"{p.title}\\{p.title}\" \"{p.title}\\{p.title}.wikitext\" ");
+                                Console.WriteLine($"Text of page {p.title} has been formatted");
+
+                                reportDict.Add(reportDict.Count, $"*{p.title}: " + "accepted" + Environment.NewLine);
+                                succ_generations++;
+
+                                DownloadImages(p);
+                            }
+                        });
+                        t.Wait();
                     }
                 }
+            }
+
+            void ProcExitHandler(object sender, EventArgs e)
+            {
+                proc.Dispose();
             }
 
         }
@@ -180,12 +203,9 @@ namespace WindowsFormsApp1
 
             //Try to create directory of images if not already created
             Dir_.CreateDirectory(page.title + "//images");
-
-            //Returns a list of image name strings for the article. Iterate through them
-            //using a foreach section
+                        
             List<string> images = page.GetImages();
-
-
+            
             foreach (string img in images)
             {
                 DownloadImage(img, page.title);
@@ -195,10 +215,10 @@ namespace WindowsFormsApp1
         //Downloads image <img> from Wikipedia inside the images folder of folder <page_title>
         public static async void DownloadImage(string img, string page_title)
         {
-            //In order to download anything initialize a WebClient like this
             using (WebClient client = new WebClient())
             {
-                //Make sure there are two dashes in directories (special characters)
+                bool success = false;
+
                 Console.WriteLine($"Downloading wikimedia commons HTML source of {img}");
                 string src = "";
                 try
@@ -219,15 +239,18 @@ namespace WindowsFormsApp1
                         string img_name = img.Replace("File:", "");
                         await client.DownloadFileTaskAsync(img_src, $"{page_title}//images//{img_name}");
                         Console.WriteLine($"Image {img} downloaded as {img_name} in folder {page_title}/Images");
+                        success = true;
                     }
                 }
                 catch
                 {
                     Console.WriteLine("Could not download source file");
                 }
+
+                if (success) { succ_images++; } else { fail_images++; }
             }
         }
-    }
 
+    }
 
 }
