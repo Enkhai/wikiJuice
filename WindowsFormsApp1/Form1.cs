@@ -1,17 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using DotNetWikiBot;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Diagnostics;
-using System.Text;
-using static WindowsFormsApp1.consoleWriters;
-using System.Threading.Tasks;
-using System.Timers;
 
 namespace WindowsFormsApp1
 {
@@ -70,6 +59,7 @@ namespace WindowsFormsApp1
 
         private void generateButton_Click(object sender, EventArgs e)
         {
+            generateButton.Enabled = false;
             inactivity = 0;
             tick = new KeyValuePair<int, int>(0, 0);
 
@@ -124,6 +114,7 @@ namespace WindowsFormsApp1
                     "Total: Downloaded/failed images: " + 
                     Generator.getImageSuccesses() + "/" + Generator.getImageFailures());
                 StatusTB.AppendText(Environment.NewLine + "Done");
+                generateButton.Enabled = true;
 
             }
             else if (temp.Value == tick.Value) { inactivity++; }
