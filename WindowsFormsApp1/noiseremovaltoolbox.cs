@@ -31,14 +31,10 @@ namespace WindowsFormsApp1
 
             System.IO.StreamReader sr = new System.IO.StreamReader(fname);
 
-
             System.IO.StreamWriter newfile = new System.IO.StreamWriter(fname + "(new)", true, Encoding.UTF8, 4);
-
-
+            
             while ((line = sr.ReadLine()) != null)
             {
-
-
                 //System.Console.WriteLine("BEFORE==>"+line);
                 //String newline1 = check_and_return_line(line);
                 String newline2 = check_and_return_line(line);
@@ -62,22 +58,15 @@ namespace WindowsFormsApp1
                         newfile.WriteLine(newline2);
 
                     }
-
-
-
                 }
                 else
                 {
                     //System.Console.WriteLine(System.DateTime.Now);
                     break;
                 }
-
-
             }
             sr.Close();
             newfile.Close();
-
-
         }
         private String check_and_return_line(String beforeline)
         {
