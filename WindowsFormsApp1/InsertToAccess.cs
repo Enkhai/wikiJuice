@@ -18,7 +18,7 @@ namespace WindowsFormsApp1
         CategoryTableAdapter cda = new CategoryTableAdapter();
         Category_LemmaTableAdapter clda = new Category_LemmaTableAdapter();
 
-        public void InsertLemma(string path,string categoryName)
+        public void InsertLemma(string path,string[] categoryName)
         {
             string fullPath = Path.GetFullPath(path);
             string fileName = Path.GetFileNameWithoutExtension(path);
@@ -44,14 +44,22 @@ namespace WindowsFormsApp1
                 if (!LemmaMedia_Exist(lemmaID, mediaID)){
                     InsertLemmaMedia(lemmaID,mediaID);
                 }
-                bool insertCategoryComplete = InsertCaterogy(categoryName);
-                if (insertCategoryComplete){
-                    categoryID = GetCategoryID(categoryName);
-                } else {
-                    categoryID = GetLastCategoryID();
-                }
-                if (categoryID > -1 && !CategoryLemma_Exist(categoryID, lemmaID)){
-                    InsertCategoryLemma(categoryID);
+                for(int i = 0; i < categoryName.Length;i++)
+                {
+                    bool insertCategoryComplete = InsertCaterogy(categoryName[i]);
+                    if (insertCategoryComplete)
+                    {
+                        categoryID = GetCategoryID(categoryName[i]);
+                    }
+                    else
+                    {
+                        categoryID = GetLastCategoryID();
+                    }
+                    if (categoryID > -1 && !CategoryLemma_Exist(categoryID, lemmaID))
+                    {
+                        InsertCategoryLemma(categoryID);
+                    }
+
                 }
             } catch { return; }
         }
