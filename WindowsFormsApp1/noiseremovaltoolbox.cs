@@ -68,7 +68,7 @@ namespace WindowsFormsApp1
             sr.Close();
             newfile.Close();
         }
-        private String check_and_return_line(String beforeline)
+        private static String check_and_return_line(String beforeline)
         {
             int start = beforeline.IndexOf("[");
             int end = beforeline.IndexOf("]");
