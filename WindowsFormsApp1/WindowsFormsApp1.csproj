@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="Generator.cs" />
     <Compile Include="Misc.cs" />
+    <Compile Include="noiseremovaltoolbox.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
