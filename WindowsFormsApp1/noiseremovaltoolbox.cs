@@ -15,7 +15,7 @@ namespace WindowsFormsApp1
 {
     class NoiseRemovalToolbox
     {
-        void convert_file(String fname)
+        public static void convert_file(String fname)
         {
             if (!File.Exists(fname))
             {
