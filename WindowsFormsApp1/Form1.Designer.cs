@@ -51,7 +51,7 @@
             this.cat_deleteButton = new System.Windows.Forms.Button();
             this.search_deleteButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.button1 = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             this.infoTB = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -244,15 +244,15 @@
             this.search_deleteButton.UseVisualStyleBackColor = true;
             this.search_deleteButton.Click += new System.EventHandler(this.search_deleteButton_Click);
             // 
-            // button1
+            // saveButton
             // 
-            this.button1.Location = new System.Drawing.Point(469, 397);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(178, 23);
-            this.button1.TabIndex = 22;
-            this.button1.Text = "Save to specific folder (optional)";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.saveButton.Location = new System.Drawing.Point(469, 397);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(178, 23);
+            this.saveButton.TabIndex = 22;
+            this.saveButton.Text = "Save to specific folder (optional)";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // infoTB
             // 
@@ -270,7 +270,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.infoTB);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.search_deleteButton);
             this.Controls.Add(this.cat_deleteButton);
             this.Controls.Add(this.label5);
@@ -321,7 +321,7 @@
         private System.Windows.Forms.Button cat_deleteButton;
         private System.Windows.Forms.Button search_deleteButton;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.TextBox infoTB;
     }
 }
