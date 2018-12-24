@@ -53,14 +53,17 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.infoTB = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // generateButton
             // 
-            this.generateButton.Location = new System.Drawing.Point(34, 397);
+            this.generateButton.Location = new System.Drawing.Point(51, 611);
+            this.generateButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.generateButton.Name = "generateButton";
-            this.generateButton.Size = new System.Drawing.Size(75, 23);
+            this.generateButton.Size = new System.Drawing.Size(112, 35);
             this.generateButton.TabIndex = 1;
             this.generateButton.Text = "Generate";
             this.generateButton.UseVisualStyleBackColor = true;
@@ -68,17 +71,19 @@
             // 
             // usernameTB
             // 
-            this.usernameTB.Location = new System.Drawing.Point(34, 35);
+            this.usernameTB.Location = new System.Drawing.Point(51, 54);
+            this.usernameTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.usernameTB.Name = "usernameTB";
-            this.usernameTB.Size = new System.Drawing.Size(100, 20);
+            this.usernameTB.Size = new System.Drawing.Size(148, 26);
             this.usernameTB.TabIndex = 2;
             // 
             // passwordTB
             // 
-            this.passwordTB.Location = new System.Drawing.Point(160, 35);
+            this.passwordTB.Location = new System.Drawing.Point(240, 54);
+            this.passwordTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.passwordTB.Name = "passwordTB";
             this.passwordTB.PasswordChar = '*';
-            this.passwordTB.Size = new System.Drawing.Size(100, 20);
+            this.passwordTB.Size = new System.Drawing.Size(148, 26);
             this.passwordTB.TabIndex = 3;
             this.passwordTB.UseSystemPasswordChar = true;
             // 
@@ -87,29 +92,32 @@
             this.StatusTB.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.StatusTB.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StatusTB.ForeColor = System.Drawing.SystemColors.Window;
-            this.StatusTB.Location = new System.Drawing.Point(34, 207);
+            this.StatusTB.Location = new System.Drawing.Point(51, 318);
+            this.StatusTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.StatusTB.Multiline = true;
             this.StatusTB.Name = "StatusTB";
             this.StatusTB.ReadOnly = true;
             this.StatusTB.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.StatusTB.Size = new System.Drawing.Size(613, 184);
+            this.StatusTB.Size = new System.Drawing.Size(918, 281);
             this.StatusTB.TabIndex = 4;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(34, 16);
+            this.label1.Location = new System.Drawing.Point(51, 25);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.Size = new System.Drawing.Size(83, 20);
             this.label1.TabIndex = 6;
             this.label1.Text = "Username";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(157, 16);
+            this.label2.Location = new System.Drawing.Point(236, 25);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 13);
+            this.label2.Size = new System.Drawing.Size(78, 20);
             this.label2.TabIndex = 7;
             this.label2.Text = "Password";
             // 
@@ -117,9 +125,10 @@
             // 
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(715, 2);
+            this.pictureBox1.Location = new System.Drawing.Point(1072, 3);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(83, 80);
+            this.pictureBox1.Size = new System.Drawing.Size(124, 123);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
@@ -127,9 +136,11 @@
             // categoryList
             // 
             this.categoryList.FormattingEnabled = true;
-            this.categoryList.Location = new System.Drawing.Point(304, 26);
+            this.categoryList.ItemHeight = 20;
+            this.categoryList.Location = new System.Drawing.Point(456, 40);
+            this.categoryList.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.categoryList.Name = "categoryList";
-            this.categoryList.Size = new System.Drawing.Size(120, 134);
+            this.categoryList.Size = new System.Drawing.Size(178, 204);
             this.categoryList.TabIndex = 10;
             // 
             // searchList
@@ -139,9 +150,10 @@
             this.NumResults});
             this.searchList.FullRowSelect = true;
             this.searchList.GridLines = true;
-            this.searchList.Location = new System.Drawing.Point(465, 26);
+            this.searchList.Location = new System.Drawing.Point(698, 40);
+            this.searchList.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchList.Name = "searchList";
-            this.searchList.Size = new System.Drawing.Size(182, 134);
+            this.searchList.Size = new System.Drawing.Size(271, 204);
             this.searchList.TabIndex = 11;
             this.searchList.UseCompatibleStateImageBehavior = false;
             this.searchList.View = System.Windows.Forms.View.Details;
@@ -158,9 +170,10 @@
             // 
             // categoryButton
             // 
-            this.categoryButton.Location = new System.Drawing.Point(34, 156);
+            this.categoryButton.Location = new System.Drawing.Point(51, 240);
+            this.categoryButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.categoryButton.Name = "categoryButton";
-            this.categoryButton.Size = new System.Drawing.Size(100, 23);
+            this.categoryButton.Size = new System.Drawing.Size(150, 35);
             this.categoryButton.TabIndex = 12;
             this.categoryButton.Text = "Add Category";
             this.categoryButton.UseVisualStyleBackColor = true;
@@ -168,9 +181,10 @@
             // 
             // searchButton
             // 
-            this.searchButton.Location = new System.Drawing.Point(160, 156);
+            this.searchButton.Location = new System.Drawing.Point(240, 240);
+            this.searchButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(100, 23);
+            this.searchButton.Size = new System.Drawing.Size(150, 35);
             this.searchButton.TabIndex = 13;
             this.searchButton.Text = "Add search";
             this.searchButton.UseVisualStyleBackColor = true;
@@ -179,56 +193,63 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(34, 72);
+            this.label3.Location = new System.Drawing.Point(51, 111);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(104, 13);
+            this.label3.Size = new System.Drawing.Size(155, 20);
             this.label3.TabIndex = 14;
             this.label3.Text = "Input category name";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(157, 72);
+            this.label4.Location = new System.Drawing.Point(236, 111);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(95, 13);
+            this.label4.Size = new System.Drawing.Size(139, 20);
             this.label4.TabIndex = 15;
             this.label4.Text = "Input search value";
             // 
             // searchValueTB
             // 
-            this.searchValueTB.Location = new System.Drawing.Point(160, 89);
+            this.searchValueTB.Location = new System.Drawing.Point(240, 137);
+            this.searchValueTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchValueTB.Name = "searchValueTB";
-            this.searchValueTB.Size = new System.Drawing.Size(100, 20);
+            this.searchValueTB.Size = new System.Drawing.Size(148, 26);
             this.searchValueTB.TabIndex = 16;
             // 
             // numResultsTB
             // 
-            this.numResultsTB.Location = new System.Drawing.Point(160, 130);
+            this.numResultsTB.Location = new System.Drawing.Point(240, 200);
+            this.numResultsTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numResultsTB.Name = "numResultsTB";
-            this.numResultsTB.Size = new System.Drawing.Size(100, 20);
+            this.numResultsTB.Size = new System.Drawing.Size(148, 26);
             this.numResultsTB.TabIndex = 17;
             // 
             // categoryTB
             // 
-            this.categoryTB.Location = new System.Drawing.Point(37, 110);
+            this.categoryTB.Location = new System.Drawing.Point(56, 169);
+            this.categoryTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.categoryTB.Name = "categoryTB";
-            this.categoryTB.Size = new System.Drawing.Size(100, 20);
+            this.categoryTB.Size = new System.Drawing.Size(148, 26);
             this.categoryTB.TabIndex = 18;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(160, 111);
+            this.label5.Location = new System.Drawing.Point(240, 171);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(108, 13);
+            this.label5.Size = new System.Drawing.Size(163, 20);
             this.label5.TabIndex = 19;
             this.label5.Text = "and number of results";
             // 
             // cat_deleteButton
             // 
-            this.cat_deleteButton.Location = new System.Drawing.Point(304, 166);
+            this.cat_deleteButton.Location = new System.Drawing.Point(456, 255);
+            this.cat_deleteButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cat_deleteButton.Name = "cat_deleteButton";
-            this.cat_deleteButton.Size = new System.Drawing.Size(120, 23);
+            this.cat_deleteButton.Size = new System.Drawing.Size(180, 35);
             this.cat_deleteButton.TabIndex = 20;
             this.cat_deleteButton.Text = "Delete category";
             this.cat_deleteButton.UseVisualStyleBackColor = true;
@@ -236,9 +257,10 @@
             // 
             // search_deleteButton
             // 
-            this.search_deleteButton.Location = new System.Drawing.Point(465, 166);
+            this.search_deleteButton.Location = new System.Drawing.Point(698, 255);
+            this.search_deleteButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.search_deleteButton.Name = "search_deleteButton";
-            this.search_deleteButton.Size = new System.Drawing.Size(182, 23);
+            this.search_deleteButton.Size = new System.Drawing.Size(273, 35);
             this.search_deleteButton.TabIndex = 21;
             this.search_deleteButton.Text = "Delete search item";
             this.search_deleteButton.UseVisualStyleBackColor = true;
@@ -246,9 +268,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(469, 397);
+            this.button1.Location = new System.Drawing.Point(704, 611);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(178, 23);
+            this.button1.Size = new System.Drawing.Size(267, 35);
             this.button1.TabIndex = 22;
             this.button1.Text = "Save to specific folder (optional)";
             this.button1.UseVisualStyleBackColor = true;
@@ -256,19 +279,40 @@
             // 
             // infoTB
             // 
-            this.infoTB.Location = new System.Drawing.Point(680, 130);
+            this.infoTB.Location = new System.Drawing.Point(1020, 200);
+            this.infoTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.infoTB.Multiline = true;
             this.infoTB.Name = "infoTB";
             this.infoTB.ReadOnly = true;
-            this.infoTB.Size = new System.Drawing.Size(118, 195);
+            this.infoTB.Size = new System.Drawing.Size(175, 298);
             this.infoTB.TabIndex = 23;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(328, 617);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 29);
+            this.button2.TabIndex = 24;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(34, 688);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(1154, 353);
+            this.label6.TabIndex = 25;
+            this.label6.Text = "label6";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1200, 1050);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.infoTB);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.search_deleteButton);
@@ -290,6 +334,7 @@
             this.Controls.Add(this.passwordTB);
             this.Controls.Add(this.usernameTB);
             this.Controls.Add(this.generateButton);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.Text = "wikiJuice: A Wikipedia source database generator";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -323,6 +368,8 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox infoTB;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label6;
     }
 }
 

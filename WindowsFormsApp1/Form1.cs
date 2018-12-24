@@ -24,6 +24,7 @@ namespace WindowsFormsApp1
                 "database creation tool." + Environment.NewLine +
                 "Part of the InformatiCS-Library" + Environment.NewLine +
                 "application.";
+
             Console.SetOut(new MultiTextWriter(new ControlWriter(StatusTB), Console.Out));
         }
 
@@ -81,6 +82,12 @@ namespace WindowsFormsApp1
         {
             folderBrowserDialog1.ShowDialog();
             Dir_.SetDirectory(folderBrowserDialog1.SelectedPath);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string[] cat = new string[] { "try2" };
+            insert.InsertLemma("lemma1.txt", cat,label6);
         }
     }        
 }

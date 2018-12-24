@@ -28,20 +28,9 @@ namespace WindowsFormsApp1.Properties {
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|\\InformatiCS_Library." +
             "mdb")]
-        public string ConnectionString {
+        public string FinalConnectionString {
             get {
-                return ((string)(this["ConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|InformatiCS_Library.m" +
-            "db")]
-        public string InformatiCS_LibraryConnectionString {
-            get {
-                return ((string)(this["InformatiCS_LibraryConnectionString"]));
+                return ((string)(this["FinalConnectionString"]));
             }
         }
     }

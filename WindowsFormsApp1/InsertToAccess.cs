@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Data.OleDb;
 using WindowsFormsApp1.InformatiCS_LibraryDataSetTableAdapters;
-
+using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
@@ -18,11 +18,17 @@ namespace WindowsFormsApp1
         CategoryTableAdapter cda = new CategoryTableAdapter();
         Category_LemmaTableAdapter clda = new Category_LemmaTableAdapter();
 
-        public void InsertLemma(string path,string[] categoryName)
+        Label errors = null;
+
+        public void InsertLemma(string path,string[] categoryName,Label label)
         {
-            string fullPath = Path.GetFullPath(path);
+            errors = label;
+
+            DirectoryInfo di = new DirectoryInfo("..\\..\\");
             string fileName = Path.GetFileNameWithoutExtension(path);
             string extension = Path.GetExtension(path);
+            path = di.ToString() + path;
+            string fullPath = Path.GetFullPath(path);
             String content = File.ReadAllText(fullPath);
             string[] splitExtension = extension.Split('.');
             int categoryID = -1, mediaID = -1, lemmaID = -1;
@@ -44,7 +50,7 @@ namespace WindowsFormsApp1
                 if (!LemmaMedia_Exist(lemmaID, mediaID)){
                     InsertLemmaMedia(lemmaID,mediaID);
                 }
-                for(int i = 0; i < categoryName.Length;i++)
+                for (int i = 0; i < categoryName.Length;i++)
                 {
                     bool insertCategoryComplete = InsertCaterogy(categoryName[i]);
                     if (insertCategoryComplete)
@@ -59,7 +65,6 @@ namespace WindowsFormsApp1
                     {
                         InsertCategoryLemma(categoryID);
                     }
-
                 }
             } catch { return; }
         }
@@ -69,9 +74,9 @@ namespace WindowsFormsApp1
             {
                 mda.Insert(extension, content);
             }
-            catch
+            catch(OleDbException ex)
             {
-                return;
+                errors.Text = "InsertMediaError = " + ex.Message + "\n";
             }
         }
         private void InsertLemma(string lemmaName)
@@ -80,9 +85,9 @@ namespace WindowsFormsApp1
             {
                 lda.Insert(lemmaName);
             }
-            catch
+            catch (OleDbException ex)
             {
-                return;
+                errors.Text = "InsertLemmaError = " + ex.Message;
             }
         }
         private void InsertLemmaMedia(int lemmaID,int mediaID)
@@ -92,9 +97,9 @@ namespace WindowsFormsApp1
             {
                 lmda.Insert(lemmaID, mediaID);
             }
-            catch
+            catch (OleDbException ex)
             {
-                return;
+                errors.Text = "InsertLemmaMediaError = " + ex.Message + "\n";
             }
         }
         private bool InsertCaterogy(string categoryName)
@@ -106,9 +111,9 @@ namespace WindowsFormsApp1
                     cda.Insert(categoryName);
                     return true;
                 }
-                catch
+                catch (OleDbException ex)
                 {
-                    return false;
+                    errors.Text = "InsertCategoryError = " + ex.Message + "\n";
                 }
             }
             return false;
@@ -122,9 +127,9 @@ namespace WindowsFormsApp1
                 //clda.InsertCategoryLemma(categoryID, lemmaID);
                 clda.Insert(categoryID, lemmaID);
             }
-            catch
+            catch (OleDbException ex)
             {
-                return;
+                errors.Text += "InsertCategoryLemmaError = " + ex.Message+"\n";
             }
         }
         private int GetLastLemmaID()
@@ -134,8 +139,9 @@ namespace WindowsFormsApp1
             {
                 lemmaID = (int)lda.getLastLemmaID();
             }
-            catch
+            catch (OleDbException ex)
             {
+                errors.Text += "GetLastLemmaIDError = " + ex.Message + "\n";
                 lemmaID = -1;
             }
 
@@ -148,8 +154,9 @@ namespace WindowsFormsApp1
             {
                 mediaID = (int)mda.getLastMediaID();
             }
-            catch
+            catch (OleDbException ex)
             {
+                errors.Text += "GetLastMediaIDError = " + ex.Message + "\n";
                 return -1;
             }
 
@@ -162,8 +169,9 @@ namespace WindowsFormsApp1
             {
                 categoryID = (int)cda.getLastCategoryID();
             }
-            catch
+            catch (OleDbException ex)
             {
+                errors.Text += "GetLastCategoryIDError = " + ex.Message + "\n";
                 return -1;
             }
 
@@ -176,8 +184,9 @@ namespace WindowsFormsApp1
             {
                 categoryID = (int)cda.getCategoryIDbyCategoryName(categoryName);
             }
-            catch
+            catch (OleDbException ex)
             {
+                errors.Text += "GetCategoryIDError = " + ex.Message + "\n";
                 categoryID = -1;
             }
             return categoryID;
@@ -192,8 +201,9 @@ namespace WindowsFormsApp1
                 if(count == 1)
                     exist = true;
             }
-            catch
+            catch (OleDbException ex)
             {
+                errors.Text += "CategoryExistError = " + ex.Message + "\n";
                 exist = false;
             }
             return exist;
@@ -208,8 +218,9 @@ namespace WindowsFormsApp1
                 if (count == 1)
                     exist = true;
             }
-            catch
+            catch (OleDbException ex)
             {
+                errors.Text += "LemmaExistError = " + ex.Message + "\n";
                 exist = false;
             }
             return exist;
@@ -224,8 +235,9 @@ namespace WindowsFormsApp1
                 if (count == 1)
                     exist = true;
             }
-            catch
+            catch (OleDbException ex)
             {
+                errors.Text += "MediaExistError = " + ex.Message + "\n";
                 exist = false;
             }
             return exist;
