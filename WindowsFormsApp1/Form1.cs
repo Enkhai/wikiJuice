@@ -15,6 +15,7 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        InsertToAccess insert = new InsertToAccess();
         public Form1()
         {
             InitializeComponent();
@@ -23,7 +24,6 @@ namespace WindowsFormsApp1
                 "database creation tool." + Environment.NewLine +
                 "Part of the InformatiCS-Library" + Environment.NewLine +
                 "application.";
-
             Console.SetOut(new MultiTextWriter(new ControlWriter(StatusTB), Console.Out));
         }
 
