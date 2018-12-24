@@ -21,7 +21,7 @@ namespace WindowsFormsApp1
         public static int getSuccessfulGenerations() { return succ_generations; }
 
         public static int getIgnoredGenerations() { return fail_generations; }
-        
+
         public static int getImageSuccesses() { return succ_images; }
 
         public static int getImageFailures() { return fail_images; }
@@ -31,7 +31,7 @@ namespace WindowsFormsApp1
         public static void reset() { succ_generations = 0; fail_generations = 0; reportDict.Clear(); }
 
         private static void makeReport(string user)
-        {            
+        {
             reportDict.Add(reportDict.Count, Environment.NewLine + "**wikiJuice report**" + Environment.NewLine +
                 $"Logged in as {user}" + Environment.NewLine +
                 "Date: " + DateTime.Now.ToString() + Environment.NewLine +
@@ -86,7 +86,7 @@ namespace WindowsFormsApp1
             {
                 reportDict.Add(reportDict.Count, Environment.NewLine + $">{searchItem.Key} ({searchItem.Value}):" + Environment.NewLine);
                 try { GetPageSearchData(wiki, searchItem: searchItem.Key, searchResults: searchItem.Value); }
-                catch { reportDict.Add(reportDict.Count, "Could not yield search results");  }
+                catch { reportDict.Add(reportDict.Count, "Could not yield search results"); }
             }
 
             reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for categories: **" + Environment.NewLine);
@@ -137,73 +137,72 @@ namespace WindowsFormsApp1
             proc.Exited += new EventHandler(ProcExitHandler);
             proc.Start();
 
-            var t = Task.Run(() =>
+
+            using (StreamWriter sw = proc.StandardInput)
             {
-                using (StreamWriter sw = proc.StandardInput)
+                if (sw.BaseStream.CanWrite)
                 {
-                    if (sw.BaseStream.CanWrite)
+                    foreach (Page p in pl)
                     {
-                        foreach (Page p in pl)
+                        //Increasing parallelization
+                        var t = Task.Run(() =>
                         {
-                            var t1 = Task.Run(() =>
+                            //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
+                            p.title = p.title.Replace("/", "-");
+                            Console.WriteLine($"\nWorking on page {p.title}");
+
+                            //Skip if page is like Portal:, File:, Category:, etc
+                            if (p.title.Contains(":"))
                             {
-                                //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
-                                p.title = p.title.Replace("/", "-");
-                                Console.WriteLine($"\nWorking on page {p.title}");
+                                Console.WriteLine("Page has been ignored");
+                                reportDict.Add(reportDict.Count, $"*{p.title}: " + "ignored" + Environment.NewLine);
+                                fail_generations++;
+                            }
+                            else
+                            {
+                                //Try to create wiki page directory if not already created
+                                Dir_.CreateDirectory(p.title);
 
-                                //Skip if page is like Portal:, File:, Category:, etc
-                                if (p.title.Contains(":"))
+                                try
                                 {
-                                    Console.WriteLine("Page has been ignored");
-                                    reportDict.Add(reportDict.Count, $"*{p.title}: " + "ignored" + Environment.NewLine);
-                                    fail_generations++;
+                                    p.SaveToFile($"{p.title}\\{p.title}.wikitext");
                                 }
-                                else
-                                {
-                                    //Try to create wiki page directory if not already created
-                                    Dir_.CreateDirectory(p.title);
+                                catch { }
+                                sw.WriteLine($"pandoc -f mediawiki -t plain -o \"{p.title}\\{p.title}\" \"{p.title}\\{p.title}.wikitext\" ");
+                                Console.WriteLine($"Text of page {p.title} has been formatted");
 
-                                    try
-                                    {
-                                        p.SaveToFile($"{p.title}\\{p.title}.wikitext");
-                                    }
-                                    catch { }
-                                    sw.WriteLine($"pandoc -f mediawiki -t plain -o \"{p.title}\\{p.title}\" \"{p.title}\\{p.title}.wikitext\" ");
-                                    Console.WriteLine($"Text of page {p.title} has been formatted");
+                                reportDict.Add(reportDict.Count, $"*{p.title}: " + "accepted" + Environment.NewLine);
+                                succ_generations++;
 
-                                    reportDict.Add(reportDict.Count, $"*{p.title}: " + "accepted" + Environment.NewLine);
-                                    succ_generations++;
-
-                                    DownloadImages(p);
-                                }
-                            });
-                            t1.Wait();
-                        }
+                                DownloadImages(p);
+                            }
+                        });
+                        t.Wait();
                     }
                 }
-            });
-            t.Wait();
-            var t2 = t.ContinueWith(task =>
-           {
-               InsertToAccess insert = new InsertToAccess();
-
-               while (true)
-               {
-                    try { bool exit = proc.HasExited; }
-                   catch (InvalidOperationException)
+            }
+            
+            InsertToAccess insert = new InsertToAccess(); //InsertToAccess methods are not static
+            //Wait for the process to exit to run noise removal on new files
+            while (true)
+            {
+                try { bool exit = proc.HasExited; }
+                catch (InvalidOperationException) //Process has succesfully exited
+                {
+                    foreach (Page p in pl)
                     {
-                       foreach (Page p in pl)
-                       {
-                           Console.WriteLine($"Cleaning text of page {p.title}");
-                           List<string> categories = p.GetCategories();
-                           try { NoiseRemovalToolbox.convert_file($"{p.title}//{p.title}"); }
-                           catch(Exception exc) { Console.WriteLine(exc.Message); }
-                           insert.InsertLemma($"{p.title}/{p.title}(new)", categories); 
-                       }
-                   break;
-                   }
-               }               
-           });
+                        Console.WriteLine($"Cleaning text of page {p.title}");
+                        List<string> categories = p.GetCategories();
+                        try
+                        {
+                            NoiseRemovalToolbox.convert_file($"{p.title}//{p.title}");
+                            insert.InsertLemma($"{p.title}//{p.title}(new)", categories);
+                        }
+                        catch (Exception exc) { Console.WriteLine(exc.Message); }
+                    }
+                    break;
+                }
+            }
 
             void ProcExitHandler(object sender, EventArgs e)
             {
@@ -220,9 +219,9 @@ namespace WindowsFormsApp1
 
             //Try to create directory of images if not already created
             Dir_.CreateDirectory(page.title + "//images");
-                        
+
             List<string> images = page.GetImages();
-            
+
             foreach (string img in images)
             {
                 DownloadImage(img, page.title);
@@ -267,7 +266,5 @@ namespace WindowsFormsApp1
                 if (success) { succ_images++; } else { fail_images++; }
             }
         }
-
     }
-
 }
