@@ -17,7 +17,7 @@ namespace WindowsFormsApp1
         {
             if (!File.Exists(fname))
             {
-                System.Console.WriteLine("Invalid Path!");
+                throw new Exception("Invalid Path!"); //throws exception instead of message
             }
 
             //This fname,is a path to the file i want to convert and remove noise

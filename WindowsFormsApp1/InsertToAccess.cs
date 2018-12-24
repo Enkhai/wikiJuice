@@ -18,12 +18,12 @@ namespace WindowsFormsApp1
         CategoryTableAdapter cda = new CategoryTableAdapter();
         Category_LemmaTableAdapter clda = new Category_LemmaTableAdapter();
 
-        public void InsertLemma(string path,string[] categoryName)
+        public void InsertLemma(string path,List<string> categoryName) //small change. from array to list
         {
             string fullPath = Path.GetFullPath(path);
             string fileName = Path.GetFileNameWithoutExtension(path);
             string extension = Path.GetExtension(path);
-            String content = File.ReadAllText(fullPath);
+            String content = File.ReadAllText(path); //edit to path
             string[] splitExtension = extension.Split('.');
             int categoryID = -1, mediaID = -1, lemmaID = -1;
             try
@@ -44,12 +44,12 @@ namespace WindowsFormsApp1
                 if (!LemmaMedia_Exist(lemmaID, mediaID)){
                     InsertLemmaMedia(lemmaID,mediaID);
                 }
-                for(int i = 0; i < categoryName.Length;i++)
+                foreach (string i in categoryName) //small change. from array to list
                 {
-                    bool insertCategoryComplete = InsertCaterogy(categoryName[i]);
+                    bool insertCategoryComplete = InsertCaterogy(i);
                     if (insertCategoryComplete)
                     {
-                        categoryID = GetCategoryID(categoryName[i]);
+                        categoryID = GetCategoryID(i);
                     }
                     else
                     {

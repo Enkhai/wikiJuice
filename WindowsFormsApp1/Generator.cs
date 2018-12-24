@@ -138,50 +138,75 @@ namespace WindowsFormsApp1
             proc.Exited += new EventHandler(ProcExitHandler);
             proc.Start();
 
-            using (StreamWriter sw = proc.StandardInput)
+            bool proc_disposed = false;
+
+            var t = Task.Run(() =>
             {
-                if (sw.BaseStream.CanWrite)
+                using (StreamWriter sw = proc.StandardInput)
                 {
-                    foreach (Page p in pl)
+                    if (sw.BaseStream.CanWrite)
                     {
-                        var t = Task.Run(() => {
-                            //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
-                            p.title = p.title.Replace("/", "-");
-                            Console.WriteLine($"\nWorking on page {p.title}");
-
-                            //I need to make a JSON category index from this
-                            List<string> categories = p.GetCategories();
-
-                            //Skip if page is like Portal:, File:, Category:, etc
-                            if (p.title.Contains(":"))
+                        foreach (Page p in pl)
+                        {
+                            var t1 = Task.Run(() =>
                             {
-                                Console.WriteLine("Page has been ignored");
-                                reportDict.Add(reportDict.Count, $"*{p.title}: " + "ignored" + Environment.NewLine);
-                                fail_generations++;
-                            }
-                            else
-                            {
-                                //Try to create wiki page directory if not already created
-                                Dir_.CreateDirectory(p.title);
+                                //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
+                                p.title = p.title.Replace("/", "-");
+                                Console.WriteLine($"\nWorking on page {p.title}");
 
-                                try
+                                //Skip if page is like Portal:, File:, Category:, etc
+                                if (p.title.Contains(":"))
                                 {
-                                    p.SaveToFile($"{p.title}\\{p.title}.wikitext");
+                                    Console.WriteLine("Page has been ignored");
+                                    reportDict.Add(reportDict.Count, $"*{p.title}: " + "ignored" + Environment.NewLine);
+                                    fail_generations++;
                                 }
-                                catch { }
-                                sw.WriteLine($"pandoc -f mediawiki -t plain -o \"{p.title}\\{p.title}\" \"{p.title}\\{p.title}.wikitext\" ");
-                                Console.WriteLine($"Text of page {p.title} has been formatted");
+                                else
+                                {
+                                    //Try to create wiki page directory if not already created
+                                    Dir_.CreateDirectory(p.title);
 
-                                reportDict.Add(reportDict.Count, $"*{p.title}: " + "accepted" + Environment.NewLine);
-                                succ_generations++;
+                                    try
+                                    {
+                                        p.SaveToFile($"{p.title}\\{p.title}.wikitext");
+                                    }
+                                    catch { }
+                                    sw.WriteLine($"pandoc -f mediawiki -t plain -o \"{p.title}\\{p.title}\" \"{p.title}\\{p.title}.wikitext\" ");
+                                    Console.WriteLine($"Text of page {p.title} has been formatted");
 
-                                DownloadImages(p);
-                            }
-                        });
-                        t.Wait();
+                                    reportDict.Add(reportDict.Count, $"*{p.title}: " + "accepted" + Environment.NewLine);
+                                    succ_generations++;
+
+                                    DownloadImages(p);
+                                }
+                            });
+                            t1.Wait();
+                        }
                     }
                 }
-            }
+            });
+            t.Wait();
+            var t2 = t.ContinueWith(task =>
+           {
+               InsertToAccess insert = new InsertToAccess();
+
+               while (true)
+               {
+                    try { bool exit = proc.HasExited; }
+                   catch (InvalidOperationException)
+                    {
+                       foreach (Page p in pl)
+                       {
+                           Console.WriteLine($"Cleaning text of page {p.title}");
+                           List<string> categories = p.GetCategories();
+                           try { NoiseRemovalToolbox.convert_file($"{p.title}//{p.title}"); }
+                           catch(Exception exc) { Console.WriteLine(exc.Message); }
+                           insert.InsertLemma("" + p.title, categories); 
+                       }
+                   break;
+                   }
+               }               
+           });
 
             void ProcExitHandler(object sender, EventArgs e)
             {
