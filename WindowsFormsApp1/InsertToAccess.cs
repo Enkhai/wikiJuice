@@ -10,6 +10,7 @@ using WindowsFormsApp1.InformatiCS_LibraryDataSetTableAdapters;
 
 namespace WindowsFormsApp1
 {
+    //Added multiple exceptions for debug...
     class InsertToAccess
     {
         MediaTableAdapter mda = new MediaTableAdapter();
@@ -18,12 +19,12 @@ namespace WindowsFormsApp1
         CategoryTableAdapter cda = new CategoryTableAdapter();
         Category_LemmaTableAdapter clda = new Category_LemmaTableAdapter();
 
-        public void InsertLemma(string path,List<string> categoryName) //small change. from array to list
+        public void InsertLemma(string path,List<string> categoryName) //Small change. From array to list
         {
             string fullPath = Path.GetFullPath(path);
             string fileName = Path.GetFileNameWithoutExtension(path);
             string extension = Path.GetExtension(path);
-            String content = File.ReadAllText(path); //edit to path
+            string content = File.ReadAllText(fullPath);
             string[] splitExtension = extension.Split('.');
             int categoryID = -1, mediaID = -1, lemmaID = -1;
             try
@@ -44,7 +45,7 @@ namespace WindowsFormsApp1
                 if (!LemmaMedia_Exist(lemmaID, mediaID)){
                     InsertLemmaMedia(lemmaID,mediaID);
                 }
-                foreach (string i in categoryName) //small change. from array to list
+                foreach (string i in categoryName) //Small change. From array to list
                 {
                     bool insertCategoryComplete = InsertCaterogy(i);
                     if (insertCategoryComplete)
@@ -69,8 +70,9 @@ namespace WindowsFormsApp1
             {
                 mda.Insert(extension, content);
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 return;
             }
         }
@@ -80,8 +82,9 @@ namespace WindowsFormsApp1
             {
                 lda.Insert(lemmaName);
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 return;
             }
         }
@@ -92,8 +95,9 @@ namespace WindowsFormsApp1
             {
                 lmda.Insert(lemmaID, mediaID);
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 return;
             }
         }
@@ -106,8 +110,9 @@ namespace WindowsFormsApp1
                     cda.Insert(categoryName);
                     return true;
                 }
-                catch
+                catch (Exception exc)
                 {
+                    Console.WriteLine(exc.Message);
                     return false;
                 }
             }
@@ -122,8 +127,9 @@ namespace WindowsFormsApp1
                 //clda.InsertCategoryLemma(categoryID, lemmaID);
                 clda.Insert(categoryID, lemmaID);
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 return;
             }
         }
@@ -134,8 +140,9 @@ namespace WindowsFormsApp1
             {
                 lemmaID = (int)lda.getLastLemmaID();
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 lemmaID = -1;
             }
 
@@ -148,8 +155,9 @@ namespace WindowsFormsApp1
             {
                 mediaID = (int)mda.getLastMediaID();
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 return -1;
             }
 
@@ -162,8 +170,9 @@ namespace WindowsFormsApp1
             {
                 categoryID = (int)cda.getLastCategoryID();
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 return -1;
             }
 
@@ -176,8 +185,9 @@ namespace WindowsFormsApp1
             {
                 categoryID = (int)cda.getCategoryIDbyCategoryName(categoryName);
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 categoryID = -1;
             }
             return categoryID;
@@ -192,8 +202,9 @@ namespace WindowsFormsApp1
                 if(count == 1)
                     exist = true;
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 exist = false;
             }
             return exist;
@@ -208,8 +219,9 @@ namespace WindowsFormsApp1
                 if (count == 1)
                     exist = true;
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 exist = false;
             }
             return exist;
@@ -224,8 +236,9 @@ namespace WindowsFormsApp1
                 if (count == 1)
                     exist = true;
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 exist = false;
             }
             return exist;

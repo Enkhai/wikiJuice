@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 
+//Χρηστάρα είσαι διαμάντι
 
 namespace WindowsFormsApp1
 {

@@ -8,7 +8,6 @@ using System.Net;
 using System.Threading.Tasks;
 
 //Source database creation class
-
 namespace WindowsFormsApp1
 {
     class Generator : Bot //Inherit DotNetWikiBot Bot class
@@ -138,8 +137,6 @@ namespace WindowsFormsApp1
             proc.Exited += new EventHandler(ProcExitHandler);
             proc.Start();
 
-            bool proc_disposed = false;
-
             var t = Task.Run(() =>
             {
                 using (StreamWriter sw = proc.StandardInput)
@@ -201,7 +198,7 @@ namespace WindowsFormsApp1
                            List<string> categories = p.GetCategories();
                            try { NoiseRemovalToolbox.convert_file($"{p.title}//{p.title}"); }
                            catch(Exception exc) { Console.WriteLine(exc.Message); }
-                           insert.InsertLemma("" + p.title, categories); 
+                           insert.InsertLemma($"{p.title}/{p.title}(new)", categories); 
                        }
                    break;
                    }

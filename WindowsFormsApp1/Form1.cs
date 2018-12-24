@@ -59,41 +59,42 @@ namespace WindowsFormsApp1
 
         private void generateButton_Click(object sender, EventArgs e)
         {
-            generateButton.Enabled = false;
-            saveButton.Enabled = false;
-            inactivity = 0;
-            tick = new KeyValuePair<int, int>(0, 0);
+            test.Foo();
+            //generateButton.Enabled = false;
+            //saveButton.Enabled = false;
+            //inactivity = 0;
+            //tick = new KeyValuePair<int, int>(0, 0);
 
-            StatusTB.Clear();
-            StatusTB.AppendText($"Logged in as {usernameTB.Text}" + Environment.NewLine);
+            //StatusTB.Clear();
+            //StatusTB.AppendText($"Logged in as {usernameTB.Text}" + Environment.NewLine);
 
-            Dictionary<string, int> searchItems = new Dictionary<string, int> { };
-            List<string> categories = new List<string> { };
+            //Dictionary<string, int> searchItems = new Dictionary<string, int> { };
+            //List<string> categories = new List<string> { };
 
-            StatusTB.AppendText(Environment.NewLine + "*Search items:" + Environment.NewLine);
-            foreach (ListViewItem item in searchList.Items)
-            {
-                StatusTB.AppendText($">{item.SubItems[0].Text}({item.SubItems[1].Text})" + Environment.NewLine);
-                searchItems.Add(item.SubItems[0].Text, Int32.Parse(item.SubItems[1].Text));
-            }
+            //StatusTB.AppendText(Environment.NewLine + "*Search items:" + Environment.NewLine);
+            //foreach (ListViewItem item in searchList.Items)
+            //{
+            //    StatusTB.AppendText($">{item.SubItems[0].Text}({item.SubItems[1].Text})" + Environment.NewLine);
+            //    searchItems.Add(item.SubItems[0].Text, Int32.Parse(item.SubItems[1].Text));
+            //}
 
-            StatusTB.AppendText(Environment.NewLine + "*Categories:" + Environment.NewLine);
-            foreach (string item in categoryList.Items)
-            {
-                StatusTB.AppendText(">" + item + Environment.NewLine);
-                categories.Add(item);
-            };
+            //StatusTB.AppendText(Environment.NewLine + "*Categories:" + Environment.NewLine);
+            //foreach (string item in categoryList.Items)
+            //{
+            //    StatusTB.AppendText(">" + item + Environment.NewLine);
+            //    categories.Add(item);
+            //};
 
-            try
-            {                
-                action_timer.Tick += new EventHandler(printStatus);
-                action_timer.Start();
+            //try
+            //{                
+            //    action_timer.Tick += new EventHandler(printStatus);
+            //    action_timer.Start();
 
-                StatusTB.AppendText(Environment.NewLine + "Working..." + Environment.NewLine);
+            //    StatusTB.AppendText(Environment.NewLine + "Working..." + Environment.NewLine);
 
-                Generator.generate(usernameTB.Text, passwordTB.Text, searchItems, categories);
-            }
-            catch { }
+            //    Generator.generate(usernameTB.Text, passwordTB.Text, searchItems, categories);
+            //}
+            //catch { }
         }
 
         private void printStatus(object sender, EventArgs e)
