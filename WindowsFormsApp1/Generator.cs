@@ -145,7 +145,7 @@ namespace WindowsFormsApp1
                     foreach (Page p in pl)
                     {
                         //Increasing parallelization
-                        var t = Task.Run(() =>
+                        var task1 = Task.Run(() =>
                         {
                             //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
                             p.title = p.title.Replace("/", "-");
@@ -177,7 +177,7 @@ namespace WindowsFormsApp1
                                 DownloadImages(p);
                             }
                         });
-                        t.Wait();
+                        task1.Wait();
                     }
                 }
             }
@@ -191,14 +191,19 @@ namespace WindowsFormsApp1
                 {
                     foreach (Page p in pl)
                     {
-                        Console.WriteLine($"Cleaning text of page {p.title}");
-                        List<string> categories = p.GetCategories();
-                        try
+                        //Increasing parallelization
+                        var task2 = Task.Run(() =>
                         {
-                            NoiseRemovalToolbox.convert_file($"{p.title}//{p.title}");
-                            insert.InsertLemma($"{p.title}//{p.title}(new)", categories);
-                        }
-                        catch (Exception exc) { Console.WriteLine(exc.Message); }
+                            Console.WriteLine($"Cleaning text of page {p.title}");
+                            List<string> categories = p.GetCategories();
+                            try
+                            {
+                                NoiseRemovalToolbox.convert_file($"{p.title}//{p.title}");
+                                insert.InsertLemma($"{p.title}//{p.title}(new)", categories);
+                            }
+                            catch (Exception exc) { Console.WriteLine(exc.Message); }
+                        });
+                        task2.Wait();
                     }
                     break;
                 }
