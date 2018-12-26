@@ -4,7 +4,7 @@
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="InformatiCS_LibraryConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="InformatiCS_LibraryConnectionString (Settings)" PropertyReference="ApplicationSettings.WindowsFormsApp1.Properties.Settings.GlobalReference.Default.InformatiCS_LibraryConnectionString" Provider="System.Data.OleDb" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="InformatiCS_LibraryConnectionString" IsAppSettingsProperty="true" Modifier="Assembly" Name="InformatiCS_LibraryConnectionString (Settings)" PropertyReference="ApplicationSettings.WindowsFormsApp1.Properties.Settings.GlobalReference.Default.InformatiCS_LibraryConnectionString" Provider="System.Data.OleDb" />
           <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="FinalConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="FinalConnectionString (Settings)" PropertyReference="ApplicationSettings.WindowsFormsApp1.Properties.Settings.GlobalReference.Default.FinalConnectionString" Provider="System.Data.OleDb" />
         </Connections>
         <Tables>
@@ -106,7 +106,7 @@
               <Mapping SourceColumn="Cname" DataSetColumn="Cname" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="CategoryExist" Modifier="Public" Name="CategoryExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="CategoryExist">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="CategoryExist" Modifier="Public" Name="CategoryExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="CategoryExist">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT COUNT(*) FROM Category WHERE Cname = ?</CommandText>
@@ -126,7 +126,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="getLastCategoryID" Modifier="Public" Name="getLastCategoryID" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="getLastCategoryID">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="getLastCategoryID" Modifier="Public" Name="getLastCategoryID" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="getLastCategoryID">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT MAX(ID) FROM Category</CommandText>
@@ -181,7 +181,7 @@
               <Mapping SourceColumn="LemmaID" DataSetColumn="LemmaID" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="CategoryLemmaExist" Modifier="Public" Name="CategoryLemmaExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="CategoryLemmaExist">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="CategoryLemmaExist" Modifier="Public" Name="CategoryLemmaExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="CategoryLemmaExist">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT COUNT(*) FROM Category_Lemma WHERE CategoryID = ? AND LemmaID = ?</CommandText>
@@ -328,7 +328,7 @@
               <Mapping SourceColumn="Lname" DataSetColumn="Lname" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="getLastLemmaID" Modifier="Public" Name="getLastLemmaID" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="getLastLemmaID">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="getLastLemmaID" Modifier="Public" Name="getLastLemmaID" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="getLastLemmaID">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT MAX(ID) FROM Lemma</CommandText>
@@ -346,7 +346,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="LemmaExist" Modifier="Public" Name="LemmaExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="LemmaExist">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="LemmaExist" Modifier="Public" Name="LemmaExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="LemmaExist">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT COUNT(*) FROM Lemma WHERE Lname = ?</CommandText>
@@ -403,7 +403,7 @@
               <Mapping SourceColumn="MediaID" DataSetColumn="MediaID" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="LemmaMediaExist" Modifier="Public" Name="LemmaMediaExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="LemmaMediaExist">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="LemmaMediaExist" Modifier="Public" Name="LemmaMediaExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="LemmaMediaExist">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT COUNT(*) FROM Lemma_Media WHERE LemmaID = ? AND MediaID = ?</CommandText>
@@ -464,7 +464,7 @@
               <Mapping SourceColumn="Contect" DataSetColumn="Contect" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="getLastMediaID" Modifier="Public" Name="getLastMediaID" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="getLastMediaID">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="getLastMediaID" Modifier="Public" Name="getLastMediaID" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="getLastMediaID">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT MAX(ID) FROM Media</CommandText>
@@ -482,7 +482,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="MediaExist" Modifier="Public" Name="MediaExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="MediaExist">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="MediaExist" Modifier="Public" Name="MediaExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="MediaExist">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT COUNT(*) FROM Media WHERE Contect = ?</CommandText>
@@ -502,7 +502,7 @@
   <xs:element name="InformatiCS_LibraryDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="InformatiCS_LibraryDataSet" msprop:Generator_UserDSName="InformatiCS_LibraryDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Bookmark" msprop:Generator_TableClassName="BookmarkDataTable" msprop:Generator_TableVarName="tableBookmark" msprop:Generator_RowChangedName="BookmarkRowChanged" msprop:Generator_TablePropName="Bookmark" msprop:Generator_RowDeletingName="BookmarkRowDeleting" msprop:Generator_RowChangingName="BookmarkRowChanging" msprop:Generator_RowEvHandlerName="BookmarkRowChangeEventHandler" msprop:Generator_RowDeletedName="BookmarkRowDeleted" msprop:Generator_RowClassName="BookmarkRow" msprop:Generator_UserTableName="Bookmark" msprop:Generator_RowEvArgName="BookmarkRowChangeEvent">
+        <xs:element name="Bookmark" msprop:Generator_TableClassName="BookmarkDataTable" msprop:Generator_TableVarName="tableBookmark" msprop:Generator_TablePropName="Bookmark" msprop:Generator_RowDeletingName="BookmarkRowDeleting" msprop:Generator_RowChangingName="BookmarkRowChanging" msprop:Generator_RowEvHandlerName="BookmarkRowChangeEventHandler" msprop:Generator_RowDeletedName="BookmarkRowDeleted" msprop:Generator_UserTableName="Bookmark" msprop:Generator_RowChangedName="BookmarkRowChanged" msprop:Generator_RowEvArgName="BookmarkRowChangeEvent" msprop:Generator_RowClassName="BookmarkRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -517,7 +517,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Category" msprop:Generator_TableClassName="CategoryDataTable" msprop:Generator_TableVarName="tableCategory" msprop:Generator_RowChangedName="CategoryRowChanged" msprop:Generator_TablePropName="Category" msprop:Generator_RowDeletingName="CategoryRowDeleting" msprop:Generator_RowChangingName="CategoryRowChanging" msprop:Generator_RowEvHandlerName="CategoryRowChangeEventHandler" msprop:Generator_RowDeletedName="CategoryRowDeleted" msprop:Generator_RowClassName="CategoryRow" msprop:Generator_UserTableName="Category" msprop:Generator_RowEvArgName="CategoryRowChangeEvent">
+        <xs:element name="Category" msprop:Generator_TableClassName="CategoryDataTable" msprop:Generator_TableVarName="tableCategory" msprop:Generator_TablePropName="Category" msprop:Generator_RowDeletingName="CategoryRowDeleting" msprop:Generator_RowChangingName="CategoryRowChanging" msprop:Generator_RowEvHandlerName="CategoryRowChangeEventHandler" msprop:Generator_RowDeletedName="CategoryRowDeleted" msprop:Generator_UserTableName="Category" msprop:Generator_RowChangedName="CategoryRowChanged" msprop:Generator_RowEvArgName="CategoryRowChangeEvent" msprop:Generator_RowClassName="CategoryRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -531,7 +531,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Category_Lemma" msprop:Generator_TableClassName="Category_LemmaDataTable" msprop:Generator_TableVarName="tableCategory_Lemma" msprop:Generator_RowChangedName="Category_LemmaRowChanged" msprop:Generator_TablePropName="Category_Lemma" msprop:Generator_RowDeletingName="Category_LemmaRowDeleting" msprop:Generator_RowChangingName="Category_LemmaRowChanging" msprop:Generator_RowEvHandlerName="Category_LemmaRowChangeEventHandler" msprop:Generator_RowDeletedName="Category_LemmaRowDeleted" msprop:Generator_RowClassName="Category_LemmaRow" msprop:Generator_UserTableName="Category_Lemma" msprop:Generator_RowEvArgName="Category_LemmaRowChangeEvent">
+        <xs:element name="Category_Lemma" msprop:Generator_TableClassName="Category_LemmaDataTable" msprop:Generator_TableVarName="tableCategory_Lemma" msprop:Generator_TablePropName="Category_Lemma" msprop:Generator_RowDeletingName="Category_LemmaRowDeleting" msprop:Generator_RowChangingName="Category_LemmaRowChanging" msprop:Generator_RowEvHandlerName="Category_LemmaRowChangeEventHandler" msprop:Generator_RowDeletedName="Category_LemmaRowDeleted" msprop:Generator_UserTableName="Category_Lemma" msprop:Generator_RowChangedName="Category_LemmaRowChanged" msprop:Generator_RowEvArgName="Category_LemmaRowChangeEvent" msprop:Generator_RowClassName="Category_LemmaRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="CategoryID" msprop:Generator_ColumnVarNameInTable="columnCategoryID" msprop:Generator_ColumnPropNameInRow="CategoryID" msprop:Generator_ColumnPropNameInTable="CategoryIDColumn" msprop:Generator_UserColumnName="CategoryID" type="xs:int" />
@@ -539,14 +539,14 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="History" msprop:Generator_TableClassName="HistoryDataTable" msprop:Generator_TableVarName="tableHistory" msprop:Generator_RowChangedName="HistoryRowChanged" msprop:Generator_TablePropName="History" msprop:Generator_RowDeletingName="HistoryRowDeleting" msprop:Generator_RowChangingName="HistoryRowChanging" msprop:Generator_RowEvHandlerName="HistoryRowChangeEventHandler" msprop:Generator_RowDeletedName="HistoryRowDeleted" msprop:Generator_RowClassName="HistoryRow" msprop:Generator_UserTableName="History" msprop:Generator_RowEvArgName="HistoryRowChangeEvent">
+        <xs:element name="History" msprop:Generator_TableClassName="HistoryDataTable" msprop:Generator_TableVarName="tableHistory" msprop:Generator_TablePropName="History" msprop:Generator_RowDeletingName="HistoryRowDeleting" msprop:Generator_RowChangingName="HistoryRowChanging" msprop:Generator_RowEvHandlerName="HistoryRowChangeEventHandler" msprop:Generator_RowDeletedName="HistoryRowDeleted" msprop:Generator_UserTableName="History" msprop:Generator_RowChangedName="HistoryRowChanged" msprop:Generator_RowEvArgName="HistoryRowChangeEvent" msprop:Generator_RowClassName="HistoryRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="History_keep_Lemma" msprop:Generator_TableClassName="History_keep_LemmaDataTable" msprop:Generator_TableVarName="tableHistory_keep_Lemma" msprop:Generator_RowChangedName="History_keep_LemmaRowChanged" msprop:Generator_TablePropName="History_keep_Lemma" msprop:Generator_RowDeletingName="History_keep_LemmaRowDeleting" msprop:Generator_RowChangingName="History_keep_LemmaRowChanging" msprop:Generator_RowEvHandlerName="History_keep_LemmaRowChangeEventHandler" msprop:Generator_RowDeletedName="History_keep_LemmaRowDeleted" msprop:Generator_RowClassName="History_keep_LemmaRow" msprop:Generator_UserTableName="History_keep_Lemma" msprop:Generator_RowEvArgName="History_keep_LemmaRowChangeEvent">
+        <xs:element name="History_keep_Lemma" msprop:Generator_TableClassName="History_keep_LemmaDataTable" msprop:Generator_TableVarName="tableHistory_keep_Lemma" msprop:Generator_TablePropName="History_keep_Lemma" msprop:Generator_RowDeletingName="History_keep_LemmaRowDeleting" msprop:Generator_RowChangingName="History_keep_LemmaRowChanging" msprop:Generator_RowEvHandlerName="History_keep_LemmaRowChangeEventHandler" msprop:Generator_RowDeletedName="History_keep_LemmaRowDeleted" msprop:Generator_UserTableName="History_keep_Lemma" msprop:Generator_RowChangedName="History_keep_LemmaRowChanged" msprop:Generator_RowEvArgName="History_keep_LemmaRowChangeEvent" msprop:Generator_RowClassName="History_keep_LemmaRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="HistoryID" msprop:Generator_ColumnVarNameInTable="columnHistoryID" msprop:Generator_ColumnPropNameInRow="HistoryID" msprop:Generator_ColumnPropNameInTable="HistoryIDColumn" msprop:Generator_UserColumnName="HistoryID" type="xs:int" />
@@ -555,7 +555,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Lemma" msprop:Generator_TableClassName="LemmaDataTable" msprop:Generator_TableVarName="tableLemma" msprop:Generator_RowChangedName="LemmaRowChanged" msprop:Generator_TablePropName="Lemma" msprop:Generator_RowDeletingName="LemmaRowDeleting" msprop:Generator_RowChangingName="LemmaRowChanging" msprop:Generator_RowEvHandlerName="LemmaRowChangeEventHandler" msprop:Generator_RowDeletedName="LemmaRowDeleted" msprop:Generator_RowClassName="LemmaRow" msprop:Generator_UserTableName="Lemma" msprop:Generator_RowEvArgName="LemmaRowChangeEvent">
+        <xs:element name="Lemma" msprop:Generator_TableClassName="LemmaDataTable" msprop:Generator_TableVarName="tableLemma" msprop:Generator_TablePropName="Lemma" msprop:Generator_RowDeletingName="LemmaRowDeleting" msprop:Generator_RowChangingName="LemmaRowChanging" msprop:Generator_RowEvHandlerName="LemmaRowChangeEventHandler" msprop:Generator_RowDeletedName="LemmaRowDeleted" msprop:Generator_UserTableName="Lemma" msprop:Generator_RowChangedName="LemmaRowChanged" msprop:Generator_RowEvArgName="LemmaRowChangeEvent" msprop:Generator_RowClassName="LemmaRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -569,7 +569,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Lemma_Media" msprop:Generator_TableClassName="Lemma_MediaDataTable" msprop:Generator_TableVarName="tableLemma_Media" msprop:Generator_RowChangedName="Lemma_MediaRowChanged" msprop:Generator_TablePropName="Lemma_Media" msprop:Generator_RowDeletingName="Lemma_MediaRowDeleting" msprop:Generator_RowChangingName="Lemma_MediaRowChanging" msprop:Generator_RowEvHandlerName="Lemma_MediaRowChangeEventHandler" msprop:Generator_RowDeletedName="Lemma_MediaRowDeleted" msprop:Generator_RowClassName="Lemma_MediaRow" msprop:Generator_UserTableName="Lemma_Media" msprop:Generator_RowEvArgName="Lemma_MediaRowChangeEvent">
+        <xs:element name="Lemma_Media" msprop:Generator_TableClassName="Lemma_MediaDataTable" msprop:Generator_TableVarName="tableLemma_Media" msprop:Generator_TablePropName="Lemma_Media" msprop:Generator_RowDeletingName="Lemma_MediaRowDeleting" msprop:Generator_RowChangingName="Lemma_MediaRowChanging" msprop:Generator_RowEvHandlerName="Lemma_MediaRowChangeEventHandler" msprop:Generator_RowDeletedName="Lemma_MediaRowDeleted" msprop:Generator_UserTableName="Lemma_Media" msprop:Generator_RowChangedName="Lemma_MediaRowChanged" msprop:Generator_RowEvArgName="Lemma_MediaRowChangeEvent" msprop:Generator_RowClassName="Lemma_MediaRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="LemmaID" msprop:Generator_ColumnVarNameInTable="columnLemmaID" msprop:Generator_ColumnPropNameInRow="LemmaID" msprop:Generator_ColumnPropNameInTable="LemmaIDColumn" msprop:Generator_UserColumnName="LemmaID" type="xs:int" />
@@ -577,7 +577,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Media" msprop:Generator_TableClassName="MediaDataTable" msprop:Generator_TableVarName="tableMedia" msprop:Generator_RowChangedName="MediaRowChanged" msprop:Generator_TablePropName="Media" msprop:Generator_RowDeletingName="MediaRowDeleting" msprop:Generator_RowChangingName="MediaRowChanging" msprop:Generator_RowEvHandlerName="MediaRowChangeEventHandler" msprop:Generator_RowDeletedName="MediaRowDeleted" msprop:Generator_RowClassName="MediaRow" msprop:Generator_UserTableName="Media" msprop:Generator_RowEvArgName="MediaRowChangeEvent">
+        <xs:element name="Media" msprop:Generator_TableClassName="MediaDataTable" msprop:Generator_TableVarName="tableMedia" msprop:Generator_TablePropName="Media" msprop:Generator_RowDeletingName="MediaRowDeleting" msprop:Generator_RowChangingName="MediaRowChanging" msprop:Generator_RowEvHandlerName="MediaRowChangeEventHandler" msprop:Generator_RowDeletedName="MediaRowDeleted" msprop:Generator_UserTableName="Media" msprop:Generator_RowChangedName="MediaRowChanged" msprop:Generator_RowEvArgName="MediaRowChangeEvent" msprop:Generator_RowClassName="MediaRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -639,13 +639,13 @@
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="LemmaBookmark" msdata:parent="Lemma" msdata:child="Bookmark" msdata:parentkey="ID" msdata:childkey="LemmaID" msprop:Generator_UserChildTable="Bookmark" msprop:Generator_ChildPropName="GetBookmarkRows" msprop:Generator_UserRelationName="LemmaBookmark" msprop:Generator_ParentPropName="LemmaRow" msprop:Generator_RelationVarName="relationLemmaBookmark" msprop:Generator_UserParentTable="Lemma" />
-      <msdata:Relationship name="CategoryCategory_Lemma_Media" msdata:parent="Category" msdata:child="Category_Lemma" msdata:parentkey="ID" msdata:childkey="CategoryID" msprop:Generator_UserChildTable="Category_Lemma" msprop:Generator_ChildPropName="GetCategory_LemmaRows" msprop:Generator_UserRelationName="CategoryCategory_Lemma_Media" msprop:Generator_RelationVarName="relationCategoryCategory_Lemma_Media" msprop:Generator_UserParentTable="Category" msprop:Generator_ParentPropName="CategoryRow" />
-      <msdata:Relationship name="LemmaCategory_Lemma_Media" msdata:parent="Lemma" msdata:child="Category_Lemma" msdata:parentkey="ID" msdata:childkey="LemmaID" msprop:Generator_UserChildTable="Category_Lemma" msprop:Generator_ChildPropName="GetCategory_LemmaRows" msprop:Generator_UserRelationName="LemmaCategory_Lemma_Media" msprop:Generator_ParentPropName="LemmaRow" msprop:Generator_RelationVarName="relationLemmaCategory_Lemma_Media" msprop:Generator_UserParentTable="Lemma" />
-      <msdata:Relationship name="HistoryHistory_keep_Lemma" msdata:parent="History" msdata:child="History_keep_Lemma" msdata:parentkey="ID" msdata:childkey="HistoryID" msprop:Generator_UserChildTable="History_keep_Lemma" msprop:Generator_ChildPropName="GetHistory_keep_LemmaRows" msprop:Generator_UserRelationName="HistoryHistory_keep_Lemma" msprop:Generator_RelationVarName="relationHistoryHistory_keep_Lemma" msprop:Generator_UserParentTable="History" msprop:Generator_ParentPropName="HistoryRow" />
-      <msdata:Relationship name="LemmaHistory_keep_Lemma" msdata:parent="Lemma" msdata:child="History_keep_Lemma" msdata:parentkey="ID" msdata:childkey="LemmaID" msprop:Generator_UserChildTable="History_keep_Lemma" msprop:Generator_ChildPropName="GetHistory_keep_LemmaRows" msprop:Generator_UserRelationName="LemmaHistory_keep_Lemma" msprop:Generator_ParentPropName="LemmaRow" msprop:Generator_RelationVarName="relationLemmaHistory_keep_Lemma" msprop:Generator_UserParentTable="Lemma" />
-      <msdata:Relationship name="LemmaLemma_Media" msdata:parent="Lemma" msdata:child="Lemma_Media" msdata:parentkey="ID" msdata:childkey="LemmaID" msprop:Generator_UserChildTable="Lemma_Media" msprop:Generator_ChildPropName="GetLemma_MediaRows" msprop:Generator_UserRelationName="LemmaLemma_Media" msprop:Generator_RelationVarName="relationLemmaLemma_Media" msprop:Generator_UserParentTable="Lemma" msprop:Generator_ParentPropName="LemmaRow" />
-      <msdata:Relationship name="MediaLemma_Media" msdata:parent="Media" msdata:child="Lemma_Media" msdata:parentkey="ID" msdata:childkey="MediaID" msprop:Generator_UserChildTable="Lemma_Media" msprop:Generator_ChildPropName="GetLemma_MediaRows" msprop:Generator_UserRelationName="MediaLemma_Media" msprop:Generator_ParentPropName="MediaRow" msprop:Generator_RelationVarName="relationMediaLemma_Media" msprop:Generator_UserParentTable="Media" />
+      <msdata:Relationship name="LemmaBookmark" msdata:parent="Lemma" msdata:child="Bookmark" msdata:parentkey="ID" msdata:childkey="LemmaID" msprop:Generator_UserChildTable="Bookmark" msprop:Generator_ChildPropName="GetBookmarkRows" msprop:Generator_UserRelationName="LemmaBookmark" msprop:Generator_RelationVarName="relationLemmaBookmark" msprop:Generator_UserParentTable="Lemma" msprop:Generator_ParentPropName="LemmaRow" />
+      <msdata:Relationship name="CategoryCategory_Lemma_Media" msdata:parent="Category" msdata:child="Category_Lemma" msdata:parentkey="ID" msdata:childkey="CategoryID" msprop:Generator_UserChildTable="Category_Lemma" msprop:Generator_ChildPropName="GetCategory_LemmaRows" msprop:Generator_UserRelationName="CategoryCategory_Lemma_Media" msprop:Generator_ParentPropName="CategoryRow" msprop:Generator_RelationVarName="relationCategoryCategory_Lemma_Media" msprop:Generator_UserParentTable="Category" />
+      <msdata:Relationship name="LemmaCategory_Lemma_Media" msdata:parent="Lemma" msdata:child="Category_Lemma" msdata:parentkey="ID" msdata:childkey="LemmaID" msprop:Generator_UserChildTable="Category_Lemma" msprop:Generator_ChildPropName="GetCategory_LemmaRows" msprop:Generator_UserRelationName="LemmaCategory_Lemma_Media" msprop:Generator_RelationVarName="relationLemmaCategory_Lemma_Media" msprop:Generator_UserParentTable="Lemma" msprop:Generator_ParentPropName="LemmaRow" />
+      <msdata:Relationship name="HistoryHistory_keep_Lemma" msdata:parent="History" msdata:child="History_keep_Lemma" msdata:parentkey="ID" msdata:childkey="HistoryID" msprop:Generator_UserChildTable="History_keep_Lemma" msprop:Generator_ChildPropName="GetHistory_keep_LemmaRows" msprop:Generator_UserRelationName="HistoryHistory_keep_Lemma" msprop:Generator_ParentPropName="HistoryRow" msprop:Generator_RelationVarName="relationHistoryHistory_keep_Lemma" msprop:Generator_UserParentTable="History" />
+      <msdata:Relationship name="LemmaHistory_keep_Lemma" msdata:parent="Lemma" msdata:child="History_keep_Lemma" msdata:parentkey="ID" msdata:childkey="LemmaID" msprop:Generator_UserChildTable="History_keep_Lemma" msprop:Generator_ChildPropName="GetHistory_keep_LemmaRows" msprop:Generator_UserRelationName="LemmaHistory_keep_Lemma" msprop:Generator_RelationVarName="relationLemmaHistory_keep_Lemma" msprop:Generator_UserParentTable="Lemma" msprop:Generator_ParentPropName="LemmaRow" />
+      <msdata:Relationship name="LemmaLemma_Media" msdata:parent="Lemma" msdata:child="Lemma_Media" msdata:parentkey="ID" msdata:childkey="LemmaID" msprop:Generator_UserChildTable="Lemma_Media" msprop:Generator_ChildPropName="GetLemma_MediaRows" msprop:Generator_UserRelationName="LemmaLemma_Media" msprop:Generator_ParentPropName="LemmaRow" msprop:Generator_RelationVarName="relationLemmaLemma_Media" msprop:Generator_UserParentTable="Lemma" />
+      <msdata:Relationship name="MediaLemma_Media" msdata:parent="Media" msdata:child="Lemma_Media" msdata:parentkey="ID" msdata:childkey="MediaID" msprop:Generator_UserChildTable="Lemma_Media" msprop:Generator_ChildPropName="GetLemma_MediaRows" msprop:Generator_UserRelationName="MediaLemma_Media" msprop:Generator_RelationVarName="relationMediaLemma_Media" msprop:Generator_UserParentTable="Media" msprop:Generator_ParentPropName="MediaRow" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>

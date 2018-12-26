@@ -84,10 +84,5 @@ namespace WindowsFormsApp1
             Dir_.SetDirectory(folderBrowserDialog1.SelectedPath);
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            string[] cat = new string[] { "try2" };
-            insert.InsertLemma("lemma1.txt", cat,label6);
-        }
     }        
 }
