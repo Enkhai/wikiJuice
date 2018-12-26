@@ -15,7 +15,6 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        InsertToAccess insert = new InsertToAccess();
         public Form1()
         {
             InitializeComponent();

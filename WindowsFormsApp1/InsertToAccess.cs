@@ -18,7 +18,13 @@ namespace WindowsFormsApp1
         CategoryTableAdapter cda = new CategoryTableAdapter();
         Category_LemmaTableAdapter clda = new Category_LemmaTableAdapter();
 
-
+        /// <summary>
+        /// as path give the relative path from ~\WindowsFormsApp1 and under,
+        /// <para>¬Example: "\\Database\\file1.txt".</para>
+        /// <para>as categoryName give the string array with names of the categories that Lemma belongs.</para>
+        /// <para>as imagesPath give the relative path of the images and the image name, </para>
+        /// <para>¬Example: "\\Database\\images\\image1.png".</para>
+        /// </summary>
         public void InsertLemma(string path,string[] categoryName,string[] imagesPath)
         {
             DirectoryInfo di = new DirectoryInfo("..\\..\\");
