@@ -2,14 +2,15 @@
 <xs:schema id="InformatiCS_LibraryDataSet" targetNamespace="http://tempuri.org/InformatiCS_LibraryDataSet.xsd" xmlns:mstns="http://tempuri.org/InformatiCS_LibraryDataSet.xsd" xmlns="http://tempuri.org/InformatiCS_LibraryDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="InformatiCS_LibraryConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="InformatiCS_LibraryConnectionString (Settings)" PropertyReference="ApplicationSettings.WindowsFormsApp1.Properties.Settings.GlobalReference.Default.InformatiCS_LibraryConnectionString" Provider="System.Data.OleDb" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="InformatiCS_LibraryConnectionString" IsAppSettingsProperty="true" Modifier="Assembly" Name="InformatiCS_LibraryConnectionString (Settings)" PropertyReference="ApplicationSettings.WindowsFormsApp1.Properties.Settings.GlobalReference.Default.InformatiCS_LibraryConnectionString" Provider="System.Data.OleDb" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="FinalConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="FinalConnectionString (Settings)" PropertyReference="ApplicationSettings.WindowsFormsApp1.Properties.Settings.GlobalReference.Default.FinalConnectionString" Provider="System.Data.OleDb" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="BookmarkTableAdapter" GeneratorDataComponentClassName="BookmarkTableAdapter" Name="Bookmark" UserDataComponentName="BookmarkTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="Bookmark" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="Bookmark" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM `Bookmark` WHERE ((`ID` = ?) AND ((? = 1 AND `Bname` IS NULL) OR (`Bname` = ?)) AND ((? = 1 AND `LemmaID` IS NULL) OR (`LemmaID` = ?)))</CommandText>
@@ -62,7 +63,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CategoryTableAdapter" GeneratorDataComponentClassName="CategoryTableAdapter" Name="Category" UserDataComponentName="CategoryTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="Category" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="Category" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM `Category` WHERE ((`ID` = ?) AND ((? = 1 AND `Cname` IS NULL) OR (`Cname` = ?)))</CommandText>
@@ -105,7 +106,7 @@
               <Mapping SourceColumn="Cname" DataSetColumn="Cname" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="CategoryExist" Modifier="Public" Name="CategoryExist" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="CategoryExist">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="CategoryExist" Modifier="Public" Name="CategoryExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="CategoryExist">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT COUNT(*) FROM Category WHERE Cname = ?</CommandText>
@@ -115,7 +116,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="Category" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="getCategoryIDbyCategoryName" Modifier="Public" Name="getCategoryIDbyCategoryName" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="getCategoryIDbyCategoryName">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="Category" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="getCategoryIDbyCategoryName" Modifier="Public" Name="getCategoryIDbyCategoryName" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="getCategoryIDbyCategoryName">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT ID FROM Category WHERE Cname = ?</CommandText>
@@ -125,7 +126,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="getLastCategoryID" Modifier="Public" Name="getLastCategoryID" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="getLastCategoryID">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="getLastCategoryID" Modifier="Public" Name="getLastCategoryID" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="getLastCategoryID">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT MAX(ID) FROM Category</CommandText>
@@ -137,7 +138,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Category_LemmaTableAdapter" GeneratorDataComponentClassName="Category_LemmaTableAdapter" Name="Category_Lemma" UserDataComponentName="Category_LemmaTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="Category_Lemma" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="Category_Lemma" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM `Category_Lemma` WHERE ((`CategoryID` = ?) AND (`LemmaID` = ?))</CommandText>
@@ -180,7 +181,7 @@
               <Mapping SourceColumn="LemmaID" DataSetColumn="LemmaID" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="CategoryLemmaExist" Modifier="Public" Name="CategoryLemmaExist" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="CategoryLemmaExist">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="CategoryLemmaExist" Modifier="Public" Name="CategoryLemmaExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="CategoryLemmaExist">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT COUNT(*) FROM Category_Lemma WHERE CategoryID = ? AND LemmaID = ?</CommandText>
@@ -195,7 +196,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="HistoryTableAdapter" GeneratorDataComponentClassName="HistoryTableAdapter" Name="History" UserDataComponentName="HistoryTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="History" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="History" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM `History` WHERE ((`ID` = ?))</CommandText>
@@ -233,7 +234,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="History_keep_LemmaTableAdapter" GeneratorDataComponentClassName="History_keep_LemmaTableAdapter" Name="History_keep_Lemma" UserDataComponentName="History_keep_LemmaTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="History_keep_Lemma" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="History_keep_Lemma" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM `History_keep_Lemma` WHERE ((`HistoryID` = ?) AND (`LemmaID` = ?) AND (`HistoryTimestamp` = ?))</CommandText>
@@ -284,7 +285,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="LemmaTableAdapter" GeneratorDataComponentClassName="LemmaTableAdapter" Name="Lemma" UserDataComponentName="LemmaTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="Lemma" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="Lemma" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM `Lemma` WHERE ((`ID` = ?) AND ((? = 1 AND `Lname` IS NULL) OR (`Lname` = ?)))</CommandText>
@@ -327,7 +328,7 @@
               <Mapping SourceColumn="Lname" DataSetColumn="Lname" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="getLastLemmaID" Modifier="Public" Name="getLastLemmaID" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="getLastLemmaID">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="getLastLemmaID" Modifier="Public" Name="getLastLemmaID" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="getLastLemmaID">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT MAX(ID) FROM Lemma</CommandText>
@@ -335,7 +336,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="Lemma" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="getLemmaIDbyLemmaName" Modifier="Public" Name="getLemmaIDbyLemmaName" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="getLemmaIDbyLemmaName">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="Lemma" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="getLemmaIDbyLemmaName" Modifier="Public" Name="getLemmaIDbyLemmaName" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="getLemmaIDbyLemmaName">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT ID FROM Lemma WHERE Lname = ?</CommandText>
@@ -345,7 +346,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="LemmaExist" Modifier="Public" Name="LemmaExist" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="LemmaExist">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="LemmaExist" Modifier="Public" Name="LemmaExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="LemmaExist">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT COUNT(*) FROM Lemma WHERE Lname = ?</CommandText>
@@ -359,7 +360,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Lemma_MediaTableAdapter" GeneratorDataComponentClassName="Lemma_MediaTableAdapter" Name="Lemma_Media" UserDataComponentName="Lemma_MediaTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="Lemma_Media" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="Lemma_Media" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM `Lemma_Media` WHERE ((`LemmaID` = ?) AND (`MediaID` = ?))</CommandText>
@@ -402,7 +403,7 @@
               <Mapping SourceColumn="MediaID" DataSetColumn="MediaID" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="LemmaMediaExist" Modifier="Public" Name="LemmaMediaExist" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="LemmaMediaExist">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="LemmaMediaExist" Modifier="Public" Name="LemmaMediaExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="LemmaMediaExist">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT COUNT(*) FROM Lemma_Media WHERE LemmaID = ? AND MediaID = ?</CommandText>
@@ -417,7 +418,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="MediaTableAdapter" GeneratorDataComponentClassName="MediaTableAdapter" Name="Media" UserDataComponentName="MediaTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="Media" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="Media" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM `Media` WHERE ((`ID` = ?) AND ((? = 1 AND `data_type` IS NULL) OR (`data_type` = ?)))</CommandText>
@@ -463,7 +464,7 @@
               <Mapping SourceColumn="Contect" DataSetColumn="Contect" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="getLastMediaID" Modifier="Public" Name="getLastMediaID" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="getLastMediaID">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="getLastMediaID" Modifier="Public" Name="getLastMediaID" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="getLastMediaID">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT MAX(ID) FROM Media</CommandText>
@@ -471,7 +472,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="Media" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="getMediaIDbyContent" Modifier="Public" Name="getMediaIDbyContent" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="getMediaIDbyContent">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="Media" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="getMediaIDbyContent" Modifier="Public" Name="getMediaIDbyContent" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="getMediaIDbyContent">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT ID FROM Media WHERE Contect = ?</CommandText>
@@ -481,7 +482,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="MediaExist" Modifier="Public" Name="MediaExist" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="MediaExist">
+              <DbSource ConnectionRef="FinalConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="MediaExist" Modifier="Public" Name="MediaExist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="MediaExist">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT COUNT(*) FROM Media WHERE Contect = ?</CommandText>
@@ -492,23 +493,6 @@
                 </SelectCommand>
               </DbSource>
             </Sources>
-          </TableAdapter>
-          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="selectTitleTableAdapter" GeneratorDataComponentClassName="selectTitleTableAdapter" Name="selectTitle" UserDataComponentName="selectTitleTableAdapter">
-            <MainSource>
-              <DbSource ConnectionRef="InformatiCS_LibraryConnectionString (Settings)" DbObjectName="selectTitle" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
-                <SelectCommand>
-                  <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT ID, Lname FROM selectTitle</CommandText>
-                    <Parameters />
-                  </DbCommand>
-                </SelectCommand>
-              </DbSource>
-            </MainSource>
-            <Mappings>
-              <Mapping SourceColumn="ID" DataSetColumn="ID" />
-              <Mapping SourceColumn="Lname" DataSetColumn="Lname" />
-            </Mappings>
-            <Sources />
           </TableAdapter>
         </Tables>
         <Sources />
@@ -614,20 +598,6 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="selectTitle" msprop:Generator_TableClassName="selectTitleDataTable" msprop:Generator_TableVarName="tableselectTitle" msprop:Generator_TablePropName="selectTitle" msprop:Generator_RowDeletingName="selectTitleRowDeleting" msprop:Generator_RowChangingName="selectTitleRowChanging" msprop:Generator_RowEvHandlerName="selectTitleRowChangeEventHandler" msprop:Generator_RowDeletedName="selectTitleRowDeleted" msprop:Generator_UserTableName="selectTitle" msprop:Generator_RowChangedName="selectTitleRowChanged" msprop:Generator_RowEvArgName="selectTitleRowChangeEvent" msprop:Generator_RowClassName="selectTitleRow">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
-              <xs:element name="Lname" msprop:Generator_ColumnVarNameInTable="columnLname" msprop:Generator_ColumnPropNameInRow="Lname" msprop:Generator_ColumnPropNameInTable="LnameColumn" msprop:Generator_UserColumnName="Lname" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="255" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">
@@ -664,10 +634,6 @@
     </xs:unique>
     <xs:unique name="Media_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:Media" />
-      <xs:field xpath="mstns:ID" />
-    </xs:unique>
-    <xs:unique name="selectTitle_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
-      <xs:selector xpath=".//mstns:selectTitle" />
       <xs:field xpath="mstns:ID" />
     </xs:unique>
   </xs:element>

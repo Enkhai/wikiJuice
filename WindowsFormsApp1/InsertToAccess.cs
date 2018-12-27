@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Data.OleDb;
 using WindowsFormsApp1.InformatiCS_LibraryDataSetTableAdapters;
-
+using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    //Added multiple exceptions for debug...
     class InsertToAccess
     {
         MediaTableAdapter mda = new MediaTableAdapter();
@@ -19,14 +18,29 @@ namespace WindowsFormsApp1
         CategoryTableAdapter cda = new CategoryTableAdapter();
         Category_LemmaTableAdapter clda = new Category_LemmaTableAdapter();
 
-        public void InsertLemma(string path,List<string> categoryName) //Small change. From array to list
+        /// <summary>
+        /// as path give the relative path from ~\WindowsFormsApp1 and under,
+        /// <para>¬Example: "\\Database\\file1.txt".</para>
+        /// <para>as categoryName give the string array with names of the categories that Lemma belongs.</para>
+        /// <para>as imagesPath give the relative path of the images and the image name, </para>
+        /// <para>¬Example: "\\Database\\images\\image1.png".</para>
+        /// </summary>
+        public void InsertLemma(string path,string[] categoryName,string[] imagesPath)
         {
-            string fullPath = Path.GetFullPath(path);
+            DirectoryInfo di = new DirectoryInfo("..\\..\\");
             string fileName = Path.GetFileNameWithoutExtension(path);
             string extension = Path.GetExtension(path);
-            string content = File.ReadAllText(fullPath);
+
+            path = di.ToString() + path;
+
+            Path.GetInvalidPathChars();
+            string fullPath = Path.GetFullPath(path);
+            String content = File.ReadAllText(path);
             string[] splitExtension = extension.Split('.');
             int categoryID = -1, mediaID = -1, lemmaID = -1;
+
+            string[] splittedImagePath = null;
+
             try
             {
                 if (!Media_Exist(content))
@@ -39,18 +53,46 @@ namespace WindowsFormsApp1
                 if (!Lemma_Exist(fileName)){
                     InsertLemma(fileName);
                     lemmaID = GetLastLemmaID();
-                } else{
+                }
+                else
+                {
                     lemmaID = (int)lda.getLemmaIDbyLemmaName(fileName);
                 }
                 if (!LemmaMedia_Exist(lemmaID, mediaID)){
                     InsertLemmaMedia(lemmaID,mediaID);
                 }
-                foreach (string i in categoryName) //Small change. From array to list
+
+                Console.WriteLine("imagesPath.Length = " + imagesPath.Length);
+                for (int i = 0; i < imagesPath.Length; i++)
                 {
-                    bool insertCategoryComplete = InsertCaterogy(i);
+                    splittedImagePath = imagesPath[i].Split('.');
+                    Console.WriteLine("extention = " + splittedImagePath[1] + ", content = " + splittedImagePath[0]);
+
+                    if (!Media_Exist(splittedImagePath[0]))
+                    {
+                        InsertMedia(splittedImagePath[1], splittedImagePath[0]);
+                        mediaID = GetLastMediaID();
+                        if (!LemmaMedia_Exist(lemmaID, mediaID))
+                        {
+                            InsertLemmaMedia(lemmaID, mediaID);
+                        }
+                    }
+                    else
+                    {
+                        mediaID = (int)mda.getMediaIDbyContent(splittedImagePath[0]);
+                        if (!LemmaMedia_Exist(lemmaID, mediaID))
+                        {
+                            InsertLemmaMedia(lemmaID, mediaID);
+                        }
+                    }
+                }
+
+                for (int i = 0; i < categoryName.Length;i++)
+                {
+                    bool insertCategoryComplete = InsertCaterogy(categoryName[i]);
                     if (insertCategoryComplete)
                     {
-                        categoryID = GetCategoryID(i);
+                        categoryID = GetCategoryID(categoryName[i]);
                     }
                     else
                     {
@@ -60,21 +102,20 @@ namespace WindowsFormsApp1
                     {
                         InsertCategoryLemma(categoryID);
                     }
-
                 }
-            } catch { return; }
+            } catch(Exception ex)
+            {
+                Console.WriteLine("Error!!!!! \n"+ex.Message);
+            }
         }
+
         private void InsertMedia(string extension, String content)
         {
             try
             {
                 mda.Insert(extension, content);
             }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc.Message);
-                return;
-            }
+            catch{}
         }
         private void InsertLemma(string lemmaName)
         {
@@ -82,11 +123,7 @@ namespace WindowsFormsApp1
             {
                 lda.Insert(lemmaName);
             }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc.Message);
-                return;
-            }
+            catch{}
         }
         private void InsertLemmaMedia(int lemmaID,int mediaID)
         {
@@ -95,11 +132,7 @@ namespace WindowsFormsApp1
             {
                 lmda.Insert(lemmaID, mediaID);
             }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc.Message);
-                return;
-            }
+            catch { }
         }
         private bool InsertCaterogy(string categoryName)
         {
@@ -110,11 +143,7 @@ namespace WindowsFormsApp1
                     cda.Insert(categoryName);
                     return true;
                 }
-                catch (Exception exc)
-                {
-                    Console.WriteLine(exc.Message);
-                    return false;
-                }
+                catch { }
             }
             return false;
         }
@@ -127,11 +156,7 @@ namespace WindowsFormsApp1
                 //clda.InsertCategoryLemma(categoryID, lemmaID);
                 clda.Insert(categoryID, lemmaID);
             }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc.Message);
-                return;
-            }
+            catch { }
         }
         private int GetLastLemmaID()
         {
@@ -140,9 +165,8 @@ namespace WindowsFormsApp1
             {
                 lemmaID = (int)lda.getLastLemmaID();
             }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc.Message);
+            catch
+            { 
                 lemmaID = -1;
             }
 
@@ -155,10 +179,9 @@ namespace WindowsFormsApp1
             {
                 mediaID = (int)mda.getLastMediaID();
             }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc.Message);
-                return -1;
+            catch
+            { 
+                mediaID = -1;
             }
 
             return mediaID;
@@ -170,10 +193,9 @@ namespace WindowsFormsApp1
             {
                 categoryID = (int)cda.getLastCategoryID();
             }
-            catch (Exception exc)
+            catch
             {
-                Console.WriteLine(exc.Message);
-                return -1;
+                categoryID = -1;
             }
 
             return categoryID;
@@ -185,9 +207,8 @@ namespace WindowsFormsApp1
             {
                 categoryID = (int)cda.getCategoryIDbyCategoryName(categoryName);
             }
-            catch (Exception exc)
+            catch
             {
-                Console.WriteLine(exc.Message);
                 categoryID = -1;
             }
             return categoryID;
@@ -202,9 +223,8 @@ namespace WindowsFormsApp1
                 if(count == 1)
                     exist = true;
             }
-            catch (Exception exc)
+            catch
             {
-                Console.WriteLine(exc.Message);
                 exist = false;
             }
             return exist;
@@ -219,9 +239,8 @@ namespace WindowsFormsApp1
                 if (count == 1)
                     exist = true;
             }
-            catch (Exception exc)
+            catch
             {
-                Console.WriteLine(exc.Message);
                 exist = false;
             }
             return exist;
@@ -236,9 +255,8 @@ namespace WindowsFormsApp1
                 if (count == 1)
                     exist = true;
             }
-            catch (Exception exc)
+            catch
             {
-                Console.WriteLine(exc.Message);
                 exist = false;
             }
             return exist;
