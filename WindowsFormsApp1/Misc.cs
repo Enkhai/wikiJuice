@@ -2,19 +2,15 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 //Contains miscellaneous methods (Mostly unused)
 
 namespace WindowsFormsApp1
 {
     class Misc
-    {
+    {       
         //Save a JObject to a specified file with an optional path
         public static void SaveJObjectToFile(JObject json, string name, string path = null)
         {
