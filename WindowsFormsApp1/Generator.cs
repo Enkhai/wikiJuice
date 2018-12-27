@@ -8,7 +8,6 @@ using System.Net;
 using System.Threading.Tasks;
 
 //Source database creation class
-
 namespace WindowsFormsApp1
 {
     class Generator : Bot //Inherit DotNetWikiBot Bot class
@@ -22,7 +21,7 @@ namespace WindowsFormsApp1
         public static int getSuccessfulGenerations() { return succ_generations; }
 
         public static int getIgnoredGenerations() { return fail_generations; }
-        
+
         public static int getImageSuccesses() { return succ_images; }
 
         public static int getImageFailures() { return fail_images; }
@@ -32,7 +31,7 @@ namespace WindowsFormsApp1
         public static void reset() { succ_generations = 0; fail_generations = 0; reportDict.Clear(); }
 
         private static void makeReport(string user)
-        {            
+        {
             reportDict.Add(reportDict.Count, Environment.NewLine + "**wikiJuice report**" + Environment.NewLine +
                 $"Logged in as {user}" + Environment.NewLine +
                 "Date: " + DateTime.Now.ToString() + Environment.NewLine +
@@ -87,7 +86,7 @@ namespace WindowsFormsApp1
             {
                 reportDict.Add(reportDict.Count, Environment.NewLine + $">{searchItem.Key} ({searchItem.Value}):" + Environment.NewLine);
                 try { GetPageSearchData(wiki, searchItem: searchItem.Key, searchResults: searchItem.Value); }
-                catch { reportDict.Add(reportDict.Count, "Could not yield search results");  }
+                catch { reportDict.Add(reportDict.Count, "Could not yield search results"); }
             }
 
             reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for categories: **" + Environment.NewLine);
@@ -138,19 +137,19 @@ namespace WindowsFormsApp1
             proc.Exited += new EventHandler(ProcExitHandler);
             proc.Start();
 
+
             using (StreamWriter sw = proc.StandardInput)
             {
                 if (sw.BaseStream.CanWrite)
                 {
                     foreach (Page p in pl)
                     {
-                        var t = Task.Run(() => {
+                        //Increasing parallelization
+                        var task1 = Task.Run(() =>
+                        {
                             //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
                             p.title = p.title.Replace("/", "-");
                             Console.WriteLine($"\nWorking on page {p.title}");
-
-                            //I need to make a JSON category index from this
-                            List<string> categories = p.GetCategories();
 
                             //Skip if page is like Portal:, File:, Category:, etc
                             if (p.title.Contains(":"))
@@ -178,8 +177,35 @@ namespace WindowsFormsApp1
                                 DownloadImages(p);
                             }
                         });
-                        t.Wait();
+                        task1.Wait();
                     }
+                }
+            }
+            
+            InsertToAccess insert = new InsertToAccess(); //InsertToAccess methods are not static
+            //Wait for the process to exit to run noise removal on new files
+            while (true)
+            {
+                try { bool exit = proc.HasExited; }
+                catch (InvalidOperationException) //Process has been disposed
+                {
+                    foreach (Page p in pl)
+                    {
+                        //Increasing parallelization
+                        var task2 = Task.Run(() =>
+                        {
+                            Console.WriteLine($"Cleaning text of page {p.title}");
+                            List<string> categories = p.GetCategories();
+                            try
+                            {
+                                NoiseRemovalToolbox.convert_file($"{p.title}//{p.title}");
+                                insert.InsertLemma($"{p.title}//{p.title}(new)", categories);
+                            }
+                            catch (Exception exc) { Console.WriteLine(exc.Message); }
+                        });
+                        task2.Wait();
+                    }
+                    break;
                 }
             }
 
@@ -198,9 +224,9 @@ namespace WindowsFormsApp1
 
             //Try to create directory of images if not already created
             Dir_.CreateDirectory(page.title + "//images");
-                        
+
             List<string> images = page.GetImages();
-            
+
             foreach (string img in images)
             {
                 DownloadImage(img, page.title);
@@ -245,7 +271,5 @@ namespace WindowsFormsApp1
                 if (success) { succ_images++; } else { fail_images++; }
             }
         }
-
     }
-
 }

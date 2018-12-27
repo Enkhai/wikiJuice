@@ -59,7 +59,9 @@ namespace WindowsFormsApp1
 
         private void generateButton_Click(object sender, EventArgs e)
         {
+            //test.Foo();
             generateButton.Enabled = false;
+            saveButton.Enabled = false;
             inactivity = 0;
             tick = new KeyValuePair<int, int>(0, 0);
 
@@ -84,7 +86,7 @@ namespace WindowsFormsApp1
             };
 
             try
-            {                
+            {
                 action_timer.Tick += new EventHandler(printStatus);
                 action_timer.Start();
 
@@ -115,6 +117,7 @@ namespace WindowsFormsApp1
                     Generator.getImageSuccesses() + "/" + Generator.getImageFailures());
                 StatusTB.AppendText(Environment.NewLine + "Done");
                 generateButton.Enabled = true;
+                saveButton.Enabled = true;
 
             }
             else if (temp.Value == tick.Value) { inactivity++; }
@@ -126,7 +129,7 @@ namespace WindowsFormsApp1
             tick = temp;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void saveButton_Click(object sender, EventArgs e)
         {
             folderBrowserDialog1.ShowDialog();
             Dir_.SetDirectory(folderBrowserDialog1.SelectedPath);
