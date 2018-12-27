@@ -21,25 +21,34 @@ namespace WindowsFormsApp1
         /// <summary>
         /// as path give the relative path from ~\WindowsFormsApp1 and under,
         /// <para>¬Example: "\\Database\\file1.txt".</para>
-        /// <para>as categoryName give the string array with names of the categories that Lemma belongs.</para>
-        /// <para>as imagesPath give the relative path of the images and the image name, </para>
-        /// <para>¬Example: "\\Database\\images\\image1.png".</para>
+        /// <para>as categoryName give the List of string, with names of the categories that Lemma belongs.</para>
+        /// <para>as imagesPath give the relative path of the images Directory </para>
+        /// <para>¬Example: "\\Database\\images\\".</para>
         /// </summary>
-        public void InsertLemma(string path,string[] categoryName,string[] imagesPath)
+        public void InsertLemma(string path,List<string> categoryName,string imagesDirectory)
         {
-            DirectoryInfo di = new DirectoryInfo("..\\..\\");
+            String content = null;
+            string[] files = null;
+            string[] finalImagePath = null;
+            int pathPos = 100;
+            bool findDirectory = false;
+            int imagePathCounter = 0;
+
+            DirectoryInfo di = new DirectoryInfo("..\\..");
             string fileName = Path.GetFileNameWithoutExtension(path);
             string extension = Path.GetExtension(path);
 
-            path = di.ToString() + path;
+            string directoryFullPath = Path.GetFullPath(di.ToString());
+            path = directoryFullPath + path;
 
-            Path.GetInvalidPathChars();
             string fullPath = Path.GetFullPath(path);
-            String content = File.ReadAllText(path);
+
+            content = File.ReadAllText(fullPath);
             string[] splitExtension = extension.Split('.');
             int categoryID = -1, mediaID = -1, lemmaID = -1;
 
             string[] splittedImagePath = null;
+            string[] splittedImagePathContent = null;
 
             try
             {
@@ -62,15 +71,32 @@ namespace WindowsFormsApp1
                     InsertLemmaMedia(lemmaID,mediaID);
                 }
 
-                Console.WriteLine("imagesPath.Length = " + imagesPath.Length);
-                for (int i = 0; i < imagesPath.Length; i++)
-                {
-                    splittedImagePath = imagesPath[i].Split('.');
-                    Console.WriteLine("extention = " + splittedImagePath[1] + ", content = " + splittedImagePath[0]);
+                files = Directory.GetFiles(directoryFullPath + imagesPath);
 
-                    if (!Media_Exist(splittedImagePath[0]))
+                finalImagePath = new string[files.Length];
+
+                foreach (string file in files)
+                {
+                    finalImagePath[imagePathCounter] = "";
+                    splittedImagePath = file.Split('.');
+                    splittedImagePathContent = splittedImagePath[0].Split('\\');
+
+                    for (int i = 0; i < splittedImagePathContent.Length; i++)
                     {
-                        InsertMedia(splittedImagePath[1], splittedImagePath[0]);
+                        if(splittedImagePathContent[i] == "WindowsFormsApp1")
+                        {
+                            pathPos = i;
+                            findDirectory = true;
+                        }
+                        if(pathPos < i && findDirectory)
+                        {
+                            finalImagePath[imagePathCounter] += "\\" + splittedImagePathContent[i];
+                        }
+                    }
+                    Console.WriteLine("finalImagePath = " + finalImagePath[imagePathCounter]);
+                    if (!Media_Exist(finalImagePath[imagePathCounter]))
+                    {
+                        InsertMedia(splittedImagePath[1], finalImagePath[imagePathCounter]);
                         mediaID = GetLastMediaID();
                         if (!LemmaMedia_Exist(lemmaID, mediaID))
                         {
@@ -79,24 +105,25 @@ namespace WindowsFormsApp1
                     }
                     else
                     {
-                        mediaID = (int)mda.getMediaIDbyContent(splittedImagePath[0]);
+                        mediaID = (int)mda.getMediaIDbyContent(finalImagePath[imagePathCounter]);
                         if (!LemmaMedia_Exist(lemmaID, mediaID))
                         {
                             InsertLemmaMedia(lemmaID, mediaID);
                         }
                     }
+                    imagePathCounter++;
                 }
 
-                for (int i = 0; i < categoryName.Length;i++)
+                foreach(string category in categoryName)
                 {
-                    bool insertCategoryComplete = InsertCaterogy(categoryName[i]);
+                    bool insertCategoryComplete = InsertCaterogy(category);
                     if (insertCategoryComplete)
                     {
-                        categoryID = GetCategoryID(categoryName[i]);
+                        categoryID = GetLastCategoryID(); 
                     }
                     else
                     {
-                        categoryID = GetLastCategoryID();
+                        categoryID = GetCategoryID(category);
                     }
                     if (categoryID > -1 && !CategoryLemma_Exist(categoryID, lemmaID))
                     {

@@ -131,6 +131,5 @@ namespace WindowsFormsApp1
             folderBrowserDialog1.ShowDialog();
             Dir_.SetDirectory(folderBrowserDialog1.SelectedPath);
         }
-
     }        
 }
