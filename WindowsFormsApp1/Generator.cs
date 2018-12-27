@@ -187,7 +187,7 @@ namespace WindowsFormsApp1
             while (true)
             {
                 try { bool exit = proc.HasExited; }
-                catch (InvalidOperationException) //Process has succesfully exited
+                catch (InvalidOperationException) //Process has been disposed
                 {
                     foreach (Page p in pl)
                     {
