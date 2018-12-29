@@ -15,7 +15,7 @@ namespace WindowsFormsApp1
             {
                 "Artificial intelligence"
             };
-            insert.InsertLemma(@"C:\Users\Ceyx\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Database\Artificial intelligence\Artificial intelligence(new)", categories);
+            //insert.InsertLemma(@"C:\Users\Ceyx\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Database\Artificial intelligence\Artificial intelligence(new)", categories);
         }
     }
 }

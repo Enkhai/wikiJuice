@@ -198,8 +198,8 @@ namespace WindowsFormsApp1
                             List<string> categories = p.GetCategories();
                             try
                             {
-                                NoiseRemovalToolbox.convert_file($"{p.title}//{p.title}");
-                                insert.InsertLemma($"{p.title}//{p.title}(new)", categories);
+                                NoiseRemovalToolbox.convert_file($"{p.title}\\{p.title}");
+                                insert.InsertLemma($"\\{p.title}\\{p.title}(new)", categories, $"\\{p.title}\\images");
                             }
                             catch (Exception exc) { Console.WriteLine(exc.Message); }
                         });
