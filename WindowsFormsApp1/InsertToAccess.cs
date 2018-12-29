@@ -92,7 +92,7 @@ namespace WindowsFormsApp1
 
                     for (int i = 0; i < splittedImagePathContent.Length; i++)
                     {
-                        if (splittedImagePathContent[i] == "WindowsFormsApp1")
+                        if (splittedImagePathContent[i] == "Debug")
                         {
                             pathPos = i;
                             findDirectory = true;
