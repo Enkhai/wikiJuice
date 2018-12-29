@@ -50,6 +50,8 @@ namespace WindowsFormsApp1
 
             string fullPath = currentDir + path;
 
+            Console.Write(fullPath);
+
             content = File.ReadAllText(fullPath);
             int categoryID = -1, mediaID = -1, lemmaID = -1;
 
