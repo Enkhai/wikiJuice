@@ -34,7 +34,7 @@ namespace WindowsFormsApp1
             bool findDirectory = false;
             int imagePathCounter = 0;
 
-            DirectoryInfo di = new DirectoryInfo("..\\..\\");
+            DirectoryInfo di = new DirectoryInfo("\\..\\..");
             string currentDir = Path.GetFullPath(di.ToString());
 
             string fileName = Path.GetFileNameWithoutExtension(path);
