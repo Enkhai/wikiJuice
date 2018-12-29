@@ -25,7 +25,7 @@ namespace WindowsFormsApp1
         /// <para>as imagesPath give the relative path of the images Directory </para>
         /// <para>¬Example: "\\Database\\images\\".</para>
         /// </summary>
-        public void InsertLemma(string path,List<string> categoryName,string imagesDirectory)
+        public void InsertLemma(string path, List<string> categoryName, string imagesDirectory)
         {
             String content = null;
             string[] files = null;
@@ -34,10 +34,12 @@ namespace WindowsFormsApp1
             bool findDirectory = false;
             int imagePathCounter = 0;
 
+            DirectoryInfo di = new DirectoryInfo("..\\..");
             string currentDir = Directory.GetCurrentDirectory();
+            currentDir += di;
             string fileName = Path.GetFileNameWithoutExtension(path);
             string extension = null;
-            if(Path.GetExtension(path) == null)
+            if (Path.GetExtension(path) == null)
             {
                 extension = "txt";
             }
@@ -45,8 +47,6 @@ namespace WindowsFormsApp1
             {
                 extension = Path.GetExtension(path);
             }
-
-            
 
             string fullPath = currentDir + path;
 
@@ -62,10 +62,13 @@ namespace WindowsFormsApp1
                 {
                     InsertMedia(extension, content);
                     mediaID = GetLastMediaID();
-                } else {
+                }
+                else
+                {
                     mediaID = (int)mda.getMediaIDbyContent(content);
                 }
-                if (!Lemma_Exist(fileName)){
+                if (!Lemma_Exist(fileName))
+                {
                     InsertLemma(fileName);
                     lemmaID = GetLastLemmaID();
                 }
@@ -73,8 +76,9 @@ namespace WindowsFormsApp1
                 {
                     lemmaID = (int)lda.getLemmaIDbyLemmaName(fileName);
                 }
-                if (!LemmaMedia_Exist(lemmaID, mediaID)){
-                    InsertLemmaMedia(lemmaID,mediaID);
+                if (!LemmaMedia_Exist(lemmaID, mediaID))
+                {
+                    InsertLemmaMedia(lemmaID, mediaID);
                 }
 
                 files = Directory.GetFiles(currentDir + imagesDirectory);
@@ -89,12 +93,12 @@ namespace WindowsFormsApp1
 
                     for (int i = 0; i < splittedImagePathContent.Length; i++)
                     {
-                        if(splittedImagePathContent[i] == "WindowsFormsApp1")
+                        if (splittedImagePathContent[i] == "WindowsFormsApp1")
                         {
                             pathPos = i;
                             findDirectory = true;
                         }
-                        if(pathPos < i && findDirectory)
+                        if (pathPos < i && findDirectory)
                         {
                             finalImagePath[imagePathCounter] += "\\" + splittedImagePathContent[i];
                         }
@@ -120,12 +124,12 @@ namespace WindowsFormsApp1
                     imagePathCounter++;
                 }
 
-                foreach(string category in categoryName)
+                foreach (string category in categoryName)
                 {
                     bool insertCategoryComplete = InsertCaterogy(category);
                     if (insertCategoryComplete)
                     {
-                        categoryID = GetLastCategoryID(); 
+                        categoryID = GetLastCategoryID();
                     }
                     else
                     {
@@ -136,9 +140,10 @@ namespace WindowsFormsApp1
                         InsertCategoryLemma(categoryID);
                     }
                 }
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                Console.WriteLine("Error!!!!! \n"+ex.Message);
+                Console.WriteLine("Error!!!!! \n" + ex.Message);
             }
         }
 
@@ -148,7 +153,7 @@ namespace WindowsFormsApp1
             {
                 mda.Insert(extension, content);
             }
-            catch{}
+            catch { }
         }
         private void InsertLemma(string lemmaName)
         {
@@ -156,11 +161,11 @@ namespace WindowsFormsApp1
             {
                 lda.Insert(lemmaName);
             }
-            catch{}
+            catch { }
         }
-        private void InsertLemmaMedia(int lemmaID,int mediaID)
+        private void InsertLemmaMedia(int lemmaID, int mediaID)
         {
-            
+
             try
             {
                 lmda.Insert(lemmaID, mediaID);
@@ -183,7 +188,7 @@ namespace WindowsFormsApp1
         private void InsertCategoryLemma(int categoryID)
         {
             int lemmaID = GetLastLemmaID();
-            
+
             try
             {
                 //clda.InsertCategoryLemma(categoryID, lemmaID);
@@ -199,7 +204,7 @@ namespace WindowsFormsApp1
                 lemmaID = (int)lda.getLastLemmaID();
             }
             catch
-            { 
+            {
                 lemmaID = -1;
             }
 
@@ -213,7 +218,7 @@ namespace WindowsFormsApp1
                 mediaID = (int)mda.getLastMediaID();
             }
             catch
-            { 
+            {
                 mediaID = -1;
             }
 
@@ -253,7 +258,7 @@ namespace WindowsFormsApp1
             try
             {
                 count = (int)cda.CategoryExist(categoryName);
-                if(count == 1)
+                if (count == 1)
                     exist = true;
             }
             catch
@@ -294,23 +299,23 @@ namespace WindowsFormsApp1
             }
             return exist;
         }
-        private bool LemmaMedia_Exist(int lemmaID,int mediaID)
+        private bool LemmaMedia_Exist(int lemmaID, int mediaID)
         {
             bool exist = false;
             int count = -1;
             count = (int)lmda.LemmaMediaExist(lemmaID, mediaID);
-            if(count == 1)
+            if (count == 1)
             {
                 exist = true;
             }
             return exist;
         }
-        private bool CategoryLemma_Exist(int categoryID,int lemmaID)
+        private bool CategoryLemma_Exist(int categoryID, int lemmaID)
         {
             bool exist = false;
             int count = -1;
             count = (int)clda.CategoryLemmaExist(categoryID, lemmaID);
-            if(count == 1)
+            if (count == 1)
             {
                 exist = true;
             }
