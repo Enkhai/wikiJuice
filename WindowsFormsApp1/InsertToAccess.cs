@@ -46,9 +46,9 @@ namespace WindowsFormsApp1
                 extension = Path.GetExtension(path);
             }
 
-            path = currentDir + path;
+            
 
-            string fullPath = Path.GetFullPath(path);
+            string fullPath = currentDir + path;
 
             content = File.ReadAllText(fullPath);
             int categoryID = -1, mediaID = -1, lemmaID = -1;
