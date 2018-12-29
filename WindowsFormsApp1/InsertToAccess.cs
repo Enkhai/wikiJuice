@@ -34,12 +34,19 @@ namespace WindowsFormsApp1
             bool findDirectory = false;
             int imagePathCounter = 0;
 
-            DirectoryInfo di = new DirectoryInfo("..\\..");
+            string currentDir = Directory.GetCurrentDirectory();
             string fileName = Path.GetFileNameWithoutExtension(path);
-            string extension = Path.GetExtension(path);
+            string extension = null;
+            if(Path.GetExtension(path) == null)
+            {
+                extension = "txt";
+            }
+            else
+            {
+                extension = Path.GetExtension(path);
+            }
 
-            string directoryFullPath = Path.GetFullPath(di.ToString());
-            path = directoryFullPath + path;
+            path = currentDir + path;
 
             string fullPath = Path.GetFullPath(path);
 
@@ -71,7 +78,7 @@ namespace WindowsFormsApp1
                     InsertLemmaMedia(lemmaID,mediaID);
                 }
 
-                files = Directory.GetFiles(directoryFullPath + imagesPath);
+                files = Directory.GetFiles(currentDir + imagesDirectory);
 
                 finalImagePath = new string[files.Length];
 
