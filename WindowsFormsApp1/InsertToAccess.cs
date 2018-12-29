@@ -51,7 +51,6 @@ namespace WindowsFormsApp1
             string fullPath = Path.GetFullPath(path);
 
             content = File.ReadAllText(fullPath);
-            string[] splitExtension = extension.Split('.');
             int categoryID = -1, mediaID = -1, lemmaID = -1;
 
             string[] splittedImagePath = null;
@@ -61,7 +60,7 @@ namespace WindowsFormsApp1
             {
                 if (!Media_Exist(content))
                 {
-                    InsertMedia(splitExtension[1], content);
+                    InsertMedia(extension, content);
                     mediaID = GetLastMediaID();
                 } else {
                     mediaID = (int)mda.getMediaIDbyContent(content);
