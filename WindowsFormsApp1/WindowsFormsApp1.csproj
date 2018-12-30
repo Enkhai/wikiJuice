@@ -124,6 +124,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="wikiJuice_diagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
