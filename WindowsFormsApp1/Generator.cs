@@ -80,23 +80,31 @@ namespace WindowsFormsApp1
         //Stores page data based on desired search items and categories
         public static void GetPageMultipleData(Site wiki, Dictionary<string, int> searchItems, List<string> categories)
         {
+            List<Task> tasks = new List<Task> { };
             reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for search items: **" + Environment.NewLine);
 
             foreach (KeyValuePair<string, int> searchItem in searchItems)
             {
-                reportDict.Add(reportDict.Count, Environment.NewLine + $">{searchItem.Key} ({searchItem.Value}):" + Environment.NewLine);
-                try { GetPageSearchData(wiki, searchItem: searchItem.Key, searchResults: searchItem.Value); }
-                catch { reportDict.Add(reportDict.Count, "Could not yield search results"); }
-            }
+                Task task = Task.Run(() =>
+                {
+                    reportDict.Add(reportDict.Count, Environment.NewLine + $">{searchItem.Key} ({searchItem.Value}):" + Environment.NewLine);
+                    try { GetPageSearchData(wiki, searchItem: searchItem.Key, searchResults: searchItem.Value); }
+                    catch { reportDict.Add(reportDict.Count, "Could not yield search results"); }
+                });tasks.Add(task);
+        }
 
             reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for categories: **" + Environment.NewLine);
 
             foreach (string category in categories)
             {
-                reportDict.Add(reportDict.Count, Environment.NewLine + $">{category}:" + Environment.NewLine + Environment.NewLine);
-                try { GetPageSearchData(wiki, category_switch: true, category: category); }
-                catch { reportDict.Add(reportDict.Count, "Category not found"); }
+                Task task = Task.Run(() =>
+                {
+                    reportDict.Add(reportDict.Count, Environment.NewLine + $">{category}:" + Environment.NewLine + Environment.NewLine);
+                    try { GetPageSearchData(wiki, category_switch: true, category: category); }
+                    catch { reportDict.Add(reportDict.Count, "Category not found"); }
+                });tasks.Add(task);
             }
+            Task.WaitAll(tasks.ToArray());
         }
 
         //Stores page data based on search value and number of results
@@ -137,22 +145,24 @@ namespace WindowsFormsApp1
             proc.Exited += new EventHandler(ProcExitHandler);
             proc.Start();
 
+            List<Task> tasks = new List<Task> { };
 
             using (StreamWriter sw = proc.StandardInput)
             {
                 if (sw.BaseStream.CanWrite)
                 {
+                    //Increasing parallelization
                     foreach (Page p in pl)
                     {
-                        //Increasing parallelization
-                        var task1 = Task.Run(() =>
+                        Task task = Task.Run(() =>
                         {
-                            //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
-                            p.title = p.title.Replace("/", "-");
+
+                        //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
+                        p.title = p.title.Replace("/", "-");
                             Console.WriteLine($"\nWorking on page {p.title}");
 
-                            //Skip if page is like Portal:, File:, Category:, etc
-                            if (p.title.Contains(":"))
+                        //Skip if page is like Portal:, File:, Category:, etc
+                        if (p.title.Contains(":"))
                             {
                                 Console.WriteLine("Page has been ignored");
                                 reportDict.Add(reportDict.Count, $"*{p.title}: " + "ignored" + Environment.NewLine);
@@ -160,8 +170,11 @@ namespace WindowsFormsApp1
                             }
                             else
                             {
-                                //Try to create wiki page directory if not already created
-                                Dir_.CreateDirectory(p.title);
+                            //Try to create wiki page directory if not already created
+                            Dir_.CreateDirectory(p.title);
+
+                                Console.WriteLine($"Getting page {p.title} images");
+                                Task download_images = DownloadImagesAsync(p);
 
                                 try
                                 {
@@ -174,40 +187,36 @@ namespace WindowsFormsApp1
                                 reportDict.Add(reportDict.Count, $"*{p.title}: " + "accepted" + Environment.NewLine);
                                 succ_generations++;
 
-                                DownloadImages(p);
+                                download_images.Wait();
                             }
-                        });
-                        task1.Wait();
+                        }); tasks.Add(task);
                     }
+                    Task.WaitAll(tasks.ToArray());
                 }
             }
-            
-            InsertToAccess insert = new InsertToAccess(); //InsertToAccess methods are not static
-            //Wait for the process to exit to run noise removal on new files
-            while (true)
+
+            tasks.Clear();
+
+            foreach (Page p in pl)
             {
-                try { bool exit = proc.HasExited; }
-                catch (InvalidOperationException) //Process has been disposed
+                Task task = Task.Run(() =>
                 {
-                    foreach (Page p in pl)
+                    List<string> categories = p.GetCategories();
+                    try
                     {
-                        //Increasing parallelization
-                        var task2 = Task.Run(() =>
-                        {
-                            Console.WriteLine($"Cleaning text of page {p.title}");
-                            List<string> categories = p.GetCategories();
-                            try
-                            {
-                                NoiseRemovalToolbox.convert_file($"{p.title}\\{p.title}");
-                                insert.InsertLemma($"\\{p.title}\\{p.title}(new)", categories, $"\\{p.title}\\images");
-                            }
-                            catch (Exception exc) { Console.WriteLine(exc.Message); }
-                        });
-                        task2.Wait();
+                        //Clean the page text file
+                        Console.WriteLine($"Cleaning text of page {p.title}");
+                        NoiseRemovalToolbox.convert_file($"{p.title}\\{p.title}");
+
+                        InsertToAccess insert = new InsertToAccess(); //InsertToAccess methods are not static
+                        Console.WriteLine($"Injecting lemma {p.title} to database");
+                        insert.InsertLemma($"\\{p.title}\\{p.title}(new)", categories, $"\\{p.title}\\images");
                     }
-                    break;
-                }
+                    catch (Exception exc) { Console.WriteLine(exc.Message); }
+                });tasks.Add(task);
             }
+
+            Task.WaitAll(tasks.ToArray());
 
             void ProcExitHandler(object sender, EventArgs e)
             {
@@ -216,8 +225,9 @@ namespace WindowsFormsApp1
 
         }
 
+
         //Downloads all images of a page
-        public static void DownloadImages(Page page)
+        public static async Task DownloadImagesAsync(Page page)
         {
             //Try to create directory if not already created
             Dir_.CreateDirectory(page.title);
@@ -229,12 +239,12 @@ namespace WindowsFormsApp1
 
             foreach (string img in images)
             {
-                DownloadImage(img, page.title);
+                await DownloadImageAsync(img, page.title);
             }
         }
 
         //Downloads image <img> from Wikipedia inside the images folder of folder <page_title>
-        public static async void DownloadImage(string img, string page_title)
+        public static async Task DownloadImageAsync(string img, string page_title)
         {
             using (WebClient client = new WebClient())
             {
