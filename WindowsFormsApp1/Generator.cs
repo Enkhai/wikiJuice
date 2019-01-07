@@ -109,18 +109,21 @@ namespace WindowsFormsApp1
             //}
             //Task.WaitAll(tasks.ToArray()); //Wait for the tasks
 
-            //Serially fill the database
-            foreach (KeyValuePair<string, int> searchItem in searchItems)
-            {
-                try { FillDatabaseFromCategory(wiki, searchItem.Key, searchItem.Value, true); }
-                catch (Exception exc) { Console.WriteLine(exc.Message); }
-            }
+            ////Serially fill the database
+            //foreach (KeyValuePair<string, int> searchItem in searchItems)
+            //{
+            //    try { FillDatabaseFromCategory(wiki, searchItem.Key, searchItem.Value, true); }
+            //    catch (Exception exc) { Console.WriteLine(exc.Message); }
+            //}
 
-            foreach (string category in categories)
-            {
-                try { FillDatabaseFromCategory(wiki, category); }
-                catch (Exception exc) { Console.WriteLine(exc.Message); }
-            }
+            //foreach (string category in categories)
+            //{
+            //    try { FillDatabaseFromCategory(wiki, category); }
+            //    catch (Exception exc) { Console.WriteLine(exc.Message); }
+            //}
+
+            //Finalize by properly indexing the Database
+            using (Indexer indexer = new Indexer()) { indexer.Index(); }
         }
 
         //Fills the database for every lemma of a category
