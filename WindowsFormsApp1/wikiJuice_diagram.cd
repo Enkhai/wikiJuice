@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WindowsFormsApp1.Generator">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAkAAAABAEAAAACAAAEAABCAgAASAAEAAAYkCA=</HashCode>
+      <FileName>Generator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsFormsApp1.Dir_">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Dir_.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsFormsApp1.consoleWriters">
+    <Position X="2.25" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="WindowsFormsApp1.consoleWriters.ControlWriter" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>consoleWriters.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="WindowsFormsApp1.consoleWriters.MultiTextWriter" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>consoleWriters.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>consoleWriters.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsFormsApp1.Misc">
+    <Position X="2.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Misc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsFormsApp1.NoiseRemovalToolbox">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>noiseremovaltoolbox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsFormsApp1.InsertToAccess">
+    <Position X="4" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAIgAAAIAAIAAAFBEAAAAAAAAQAAAAAAAHAAAAhoCAA=</HashCode>
+      <FileName>InsertToAccess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
