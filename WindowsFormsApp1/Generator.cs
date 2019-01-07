@@ -81,45 +81,45 @@ namespace WindowsFormsApp1
         //Stores page data based on desired search items and categories
         public static void GetPageMultipleData(Site wiki, Dictionary<string, int> searchItems, List<string> categories)
         {
-            ////Get the data
-            //List<Task> tasks = new List<Task> { };
-            //reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for search items: **" + Environment.NewLine);
+            //Get the data
+            List<Task> tasks = new List<Task> { };
+            reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for search items: **" + Environment.NewLine);
 
-            //foreach (KeyValuePair<string, int> searchItem in searchItems)
-            //{
-            //    Task task = Task.Run(() =>
-            //    {
-            //        reportDict.Add(reportDict.Count, Environment.NewLine + $">{searchItem.Key} ({searchItem.Value}):" + Environment.NewLine);
-            //        try { GetPageSearchData(wiki, searchItem: searchItem.Key, searchResults: searchItem.Value); }
-            //        catch { reportDict.Add(reportDict.Count, "Could not yield search results"); }
-            //    }); tasks.Add(task);
-            //}
+            foreach (KeyValuePair<string, int> searchItem in searchItems)
+            {
+                Task task = Task.Run(() =>
+                {
+                    reportDict.Add(reportDict.Count, Environment.NewLine + $">{searchItem.Key} ({searchItem.Value}):" + Environment.NewLine);
+                    try { GetPageSearchData(wiki, searchItem: searchItem.Key, searchResults: searchItem.Value); }
+                    catch { reportDict.Add(reportDict.Count, "Could not yield search results"); }
+                }); tasks.Add(task);
+            }
 
-            //reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for categories: **" + Environment.NewLine);
+            reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for categories: **" + Environment.NewLine);
 
-            //foreach (string category in categories)
-            //{
-            //    Task task = Task.Run(() =>
-            //    {
-            //        reportDict.Add(reportDict.Count, Environment.NewLine + $">{category}:" + Environment.NewLine + Environment.NewLine);
-            //        try { GetPageSearchData(wiki, category_switch: true, category: category); }
-            //        catch { reportDict.Add(reportDict.Count, "Category not found"); }
-            //    }); tasks.Add(task);
-            //}
-            //Task.WaitAll(tasks.ToArray()); //Wait for the tasks
+            foreach (string category in categories)
+            {
+                Task task = Task.Run(() =>
+                {
+                    reportDict.Add(reportDict.Count, Environment.NewLine + $">{category}:" + Environment.NewLine + Environment.NewLine);
+                    try { GetPageSearchData(wiki, category_switch: true, category: category); }
+                    catch { reportDict.Add(reportDict.Count, "Category not found"); }
+                }); tasks.Add(task);
+            }
+            Task.WaitAll(tasks.ToArray()); //Wait for the tasks
 
-            ////Serially fill the database
-            //foreach (KeyValuePair<string, int> searchItem in searchItems)
-            //{
-            //    try { FillDatabaseFromCategory(wiki, searchItem.Key, searchItem.Value, true); }
-            //    catch (Exception exc) { Console.WriteLine(exc.Message); }
-            //}
+            //Serially fill the database
+            foreach (KeyValuePair<string, int> searchItem in searchItems)
+            {
+                try { FillDatabaseFromCategory(wiki, searchItem.Key, searchItem.Value, true); }
+                catch (Exception exc) { Console.WriteLine(exc.Message); }
+            }
 
-            //foreach (string category in categories)
-            //{
-            //    try { FillDatabaseFromCategory(wiki, category); }
-            //    catch (Exception exc) { Console.WriteLine(exc.Message); }
-            //}
+            foreach (string category in categories)
+            {
+                try { FillDatabaseFromCategory(wiki, category); }
+                catch (Exception exc) { Console.WriteLine(exc.Message); }
+            }
 
             Dir_.SetDirectory("..");
 
@@ -127,7 +127,7 @@ namespace WindowsFormsApp1
             using (Indexer indexer = new Indexer())
             {
                 //Create index for the Lemma-Media table
-                //Console.WriteLine($"Number of indexed lemmas: {indexer.Index()}");
+                Console.WriteLine($"Number of indexed lemmas: {indexer.Index()}");
                 //Create index for the categories
                 Console.Write($"Number of indexed categories: {indexer.IndexCategories()}");
             }
