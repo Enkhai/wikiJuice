@@ -67,6 +67,7 @@ namespace WindowsFormsApp1
                 Dir_.SetDirectory("Database");
 
                 GetPageMultipleData(enWiki, searchItems, categories);
+
             }
             catch { Console.WriteLine("User login failed"); }
 
@@ -80,23 +81,83 @@ namespace WindowsFormsApp1
         //Stores page data based on desired search items and categories
         public static void GetPageMultipleData(Site wiki, Dictionary<string, int> searchItems, List<string> categories)
         {
-            reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for search items: **" + Environment.NewLine);
+            ////Get the data
+            //List<Task> tasks = new List<Task> { };
+            //reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for search items: **" + Environment.NewLine);
 
-            foreach (KeyValuePair<string, int> searchItem in searchItems)
+            //foreach (KeyValuePair<string, int> searchItem in searchItems)
+            //{
+            //    Task task = Task.Run(() =>
+            //    {
+            //        reportDict.Add(reportDict.Count, Environment.NewLine + $">{searchItem.Key} ({searchItem.Value}):" + Environment.NewLine);
+            //        try { GetPageSearchData(wiki, searchItem: searchItem.Key, searchResults: searchItem.Value); }
+            //        catch { reportDict.Add(reportDict.Count, "Could not yield search results"); }
+            //    }); tasks.Add(task);
+            //}
+
+            //reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for categories: **" + Environment.NewLine);
+
+            //foreach (string category in categories)
+            //{
+            //    Task task = Task.Run(() =>
+            //    {
+            //        reportDict.Add(reportDict.Count, Environment.NewLine + $">{category}:" + Environment.NewLine + Environment.NewLine);
+            //        try { GetPageSearchData(wiki, category_switch: true, category: category); }
+            //        catch { reportDict.Add(reportDict.Count, "Category not found"); }
+            //    }); tasks.Add(task);
+            //}
+            //Task.WaitAll(tasks.ToArray()); //Wait for the tasks
+
+            ////Serially fill the database
+            //foreach (KeyValuePair<string, int> searchItem in searchItems)
+            //{
+            //    try { FillDatabaseFromCategory(wiki, searchItem.Key, searchItem.Value, true); }
+            //    catch (Exception exc) { Console.WriteLine(exc.Message); }
+            //}
+
+            //foreach (string category in categories)
+            //{
+            //    try { FillDatabaseFromCategory(wiki, category); }
+            //    catch (Exception exc) { Console.WriteLine(exc.Message); }
+            //}
+
+            Dir_.SetDirectory("..");
+
+            //Finalize by properly indexing the Database
+            using (Indexer indexer = new Indexer()) { Console.WriteLine($"Number of indexed lemmas: {indexer.Index()}"); }
+        }
+
+        //Fills the database for every lemma of a category
+        public static void FillDatabaseFromCategory(Site wiki, string category, int searchResults = 0, bool search_switch = false)
+        {
+            PageList pl = new PageList(wiki);
+
+            switch (search_switch)
             {
-                reportDict.Add(reportDict.Count, Environment.NewLine + $">{searchItem.Key} ({searchItem.Value}):" + Environment.NewLine);
-                try { GetPageSearchData(wiki, searchItem: searchItem.Key, searchResults: searchItem.Value); }
-                catch { reportDict.Add(reportDict.Count, "Could not yield search results"); }
+                case false:
+                    pl.FillFromCategory(category);
+                    break;
+                case true:
+                    pl.FillFromGoogleSearchResults(category, searchResults);
+                    break;
+                default:
+                    throw new Exception("Invalid input");
+            }
+            pl.LoadWithMetadata();
+
+            InsertToAccess insert = new InsertToAccess(); //InsertToAccess methods are not static
+            foreach (Page p in pl)
+            {
+                List<string> categories = p.GetCategories();
+
+                try
+                {
+                    Console.WriteLine($"Injecting lemma {p.title} to database");
+                    insert.InsertLemma($"\\{p.title}\\{p.title}(new)", categories, $"\\{p.title}\\images");
+                }
+                catch (Exception exc) { Console.WriteLine(exc.Message); }
             }
 
-            reportDict.Add(reportDict.Count, Environment.NewLine + "**Getting report for categories: **" + Environment.NewLine);
-
-            foreach (string category in categories)
-            {
-                reportDict.Add(reportDict.Count, Environment.NewLine + $">{category}:" + Environment.NewLine + Environment.NewLine);
-                try { GetPageSearchData(wiki, category_switch: true, category: category); }
-                catch { reportDict.Add(reportDict.Count, "Category not found"); }
-            }
         }
 
         //Stores page data based on search value and number of results
@@ -123,101 +184,89 @@ namespace WindowsFormsApp1
             pl.LoadWithMetadata();
 
             //Create cmd process
-            Process proc = new Process();
-            ProcessStartInfo info = new ProcessStartInfo
+            using (Process proc = new Process())
             {
-                FileName = "cmd.exe",
-                RedirectStandardInput = true,
-                UseShellExecute = false,
-                WorkingDirectory = Directory.GetCurrentDirectory(),
-                CreateNoWindow = true
-            };
-
-            proc.StartInfo = info;
-            proc.Exited += new EventHandler(ProcExitHandler);
-            proc.Start();
-
-
-            using (StreamWriter sw = proc.StandardInput)
-            {
-                if (sw.BaseStream.CanWrite)
+                ProcessStartInfo info = new ProcessStartInfo
                 {
-                    foreach (Page p in pl)
+                    FileName = "cmd.exe",
+                    RedirectStandardInput = true,
+                    UseShellExecute = false,
+                    WorkingDirectory = Directory.GetCurrentDirectory(),
+                    CreateNoWindow = true
+                };
+
+                proc.StartInfo = info;
+                proc.Start();
+
+                List<Task> tasks = new List<Task> { };
+
+                using (StreamWriter sw = proc.StandardInput)
+                {
+                    if (sw.BaseStream.CanWrite)
                     {
                         //Increasing parallelization
-                        var task1 = Task.Run(() =>
+                        foreach (Page p in pl)
                         {
-                            //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
-                            p.title = p.title.Replace("/", "-");
-                            Console.WriteLine($"\nWorking on page {p.title}");
-
-                            //Skip if page is like Portal:, File:, Category:, etc
-                            if (p.title.Contains(":"))
+                            Task task = Task.Run(() =>
                             {
-                                Console.WriteLine("Page has been ignored");
-                                reportDict.Add(reportDict.Count, $"*{p.title}: " + "ignored" + Environment.NewLine);
-                                fail_generations++;
-                            }
-                            else
-                            {
-                                //Try to create wiki page directory if not already created
-                                Dir_.CreateDirectory(p.title);
 
-                                try
+                                //Formats page titles containing slashes for directory use eg. TCP/IP->TCP//IP
+                                p.title = p.title.Replace("/", "-");
+                                Console.WriteLine($"\nWorking on page {p.title}");
+
+                                //Skip if page is like Portal:, File:, Category:, etc
+                                if (p.title.Contains(":"))
                                 {
-                                    p.SaveToFile($"{p.title}\\{p.title}.wikitext");
+                                    Console.WriteLine("Page has been ignored");
+                                    reportDict.Add(reportDict.Count, $"*{p.title}: " + "ignored" + Environment.NewLine);
+                                    fail_generations++;
                                 }
-                                catch { }
-                                sw.WriteLine($"pandoc -f mediawiki -t plain -o \"{p.title}\\{p.title}\" \"{p.title}\\{p.title}.wikitext\" ");
-                                Console.WriteLine($"Text of page {p.title} has been formatted");
+                                else
+                                {
+                                    //Try to create wiki page directory if not already created
+                                    Dir_.CreateDirectory(p.title);
 
-                                reportDict.Add(reportDict.Count, $"*{p.title}: " + "accepted" + Environment.NewLine);
-                                succ_generations++;
+                                    Console.WriteLine($"Getting page {p.title} images");
+                                    Task download_images = DownloadImagesAsync(p);
 
-                                DownloadImages(p);
-                            }
-                        });
-                        task1.Wait();
+                                    try
+                                    {
+                                        p.SaveToFile($"{p.title}\\{p.title}.wikitext");
+                                    }
+                                    catch { }
+                                    sw.WriteLine($"pandoc -f mediawiki -t plain -o \"{p.title}\\{p.title}\" \"{p.title}\\{p.title}.wikitext\" ");
+                                    Console.WriteLine($"Text of page {p.title} has been formatted");
+
+                                    reportDict.Add(reportDict.Count, $"*{p.title}: " + "accepted" + Environment.NewLine);
+                                    succ_generations++;
+
+                                    download_images.Wait();
+                                }
+                            }); tasks.Add(task);
+                        }
+                        Task.WaitAll(tasks.ToArray());
                     }
                 }
+                tasks.Clear();
             }
-            
-            InsertToAccess insert = new InsertToAccess(); //InsertToAccess methods are not static
-            //Wait for the process to exit to run noise removal on new files
-            while (true)
+
+            //Clean the text files after the formatting has been done
+            foreach (Page p in pl)
             {
-                try { bool exit = proc.HasExited; }
-                catch (InvalidOperationException) //Process has been disposed
+                try
                 {
-                    foreach (Page p in pl)
-                    {
-                        //Increasing parallelization
-                        var task2 = Task.Run(() =>
-                        {
-                            Console.WriteLine($"Cleaning text of page {p.title}");
-                            List<string> categories = p.GetCategories();
-                            try
-                            {
-                                NoiseRemovalToolbox.convert_file($"{p.title}\\{p.title}");
-                                insert.InsertLemma($"\\{p.title}\\{p.title}(new)", categories, $"\\{p.title}\\images");
-                            }
-                            catch (Exception exc) { Console.WriteLine(exc.Message); }
-                        });
-                        task2.Wait();
-                    }
-                    break;
+                    //Clean the page text file
+                    Console.WriteLine($"Cleaning text of page {p.title}");
+                    NoiseRemovalToolbox.convert_file($"{p.title}\\{p.title}");
                 }
+                catch (Exception exc) { Console.WriteLine(exc.Message); }
             }
-
-            void ProcExitHandler(object sender, EventArgs e)
-            {
-                proc.Dispose();
-            }
-
+                        
         }
 
+
         //Downloads all images of a page
-        public static void DownloadImages(Page page)
+        public static async Task DownloadImagesAsync(Page page)
         {
             //Try to create directory if not already created
             Dir_.CreateDirectory(page.title);
@@ -229,12 +278,12 @@ namespace WindowsFormsApp1
 
             foreach (string img in images)
             {
-                DownloadImage(img, page.title);
+                await DownloadImageAsync(img, page.title);
             }
         }
 
         //Downloads image <img> from Wikipedia inside the images folder of folder <page_title>
-        public static async void DownloadImage(string img, string page_title)
+        public static async Task DownloadImageAsync(string img, string page_title)
         {
             using (WebClient client = new WebClient())
             {
