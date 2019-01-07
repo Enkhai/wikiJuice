@@ -68,7 +68,6 @@ namespace WindowsFormsApp1
 
                 GetPageMultipleData(enWiki, searchItems, categories);
 
-                Dir_.SetDirectory("..");
             }
             catch { Console.WriteLine("User login failed"); }
 
@@ -122,8 +121,10 @@ namespace WindowsFormsApp1
             //    catch (Exception exc) { Console.WriteLine(exc.Message); }
             //}
 
+            Dir_.SetDirectory("..");
+
             //Finalize by properly indexing the Database
-            using (Indexer indexer = new Indexer()) { indexer.Index(); }
+            using (Indexer indexer = new Indexer()) { Console.WriteLine($"Number of indexed lemmas: {indexer.Index()}"); }
         }
 
         //Fills the database for every lemma of a category
