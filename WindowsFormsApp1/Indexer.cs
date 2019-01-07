@@ -41,7 +41,7 @@ public class Indexer : IDisposable
         Directory dir = FSDirectory.Open(CategoryIndexDirectory);
         try
         {
-            writer = new IndexWriter(dir, new StandardAnalyzer(LVersion.LUCENE_30), IndexWriter.MaxFieldLength.UNLIMITED);
+            writerCategory = new IndexWriter(dir, new StandardAnalyzer(LVersion.LUCENE_30), IndexWriter.MaxFieldLength.UNLIMITED);
         }
         catch (Lucene.Net.Store.LockObtainFailedException ex)
         {
