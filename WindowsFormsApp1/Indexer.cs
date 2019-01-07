@@ -49,9 +49,7 @@ public class Indexer : IDisposable
 
     
     public int Index()
-    {
-        List<LemmaMedia> media = GetLemmaMedias();
-        
+    {        
         DataTable results = lmta.GetLemmaAndMedia();
             foreach (DataRow name in results.Rows)
             {
@@ -83,67 +81,6 @@ public class Indexer : IDisposable
     }
 
     private IndexWriter writer;
-
-    private List<Lemma> getTitles()
-    {
-        List<Lemma> titles = new List<Lemma>();
-        LemmaTableAdapter lda = new LemmaTableAdapter();
-        LemmaDataTable results = lda.GetAllLnames();
-        Lemma l = null;
-        foreach (LemmaRow lemmaRows in results)
-        {
-            l = new Lemma(lemmaRows.ID, lemmaRows.Lname);
-            titles.Add(l);
-        }
-        return titles;
-    }
-
-    private List<LemmaMedia> GetLemmaMedias()
-    {
-        List<LemmaMedia> lemmaMedias = new List<LemmaMedia>();
-        DataTable results = lmta.GetLemmaAndMedia(); 
-
-        Lemma l = null;
-        Lemma old = null;
-        Media m = null;
-        List<Media> medias = null;
-        LemmaMedia lm = null;
-
-        foreach (DataRow row in results.Rows)
-        {
-            if (l == null)
-            {
-                l = new Lemma((int)row["LID"], row["Lname"].ToString());
-                old = l;
-                m = new Media((int)row["MID"], row["dataType"].ToString(), row["Contect"].ToString());
-            }
-            if (old != null)
-            {
-                if (old.getID() == l.getID())
-                {
-                    medias = new List<Media>();
-                    m = new Media((int)row["MID"], row["dataType"].ToString(), row["Contect"].ToString());
-                    medias.Add(m);
-
-                    lm = new LemmaMedia(l, medias);
-                    lemmaMedias.Add(lm);
-                }
-                else
-                {
-                    medias.Add(m);
-
-                    lm = new LemmaMedia(l, medias);
-                    medias = null;
-                    lemmaMedias.Add(lm);
-                    l = new Lemma((int)row["LID"], row["Lname"].ToString());
-                    old = l;
-                    m = new Media((int)row["MID"], row["dataType"].ToString(), row["Contect"].ToString());
-                }
-            }
-        }
-
-        return lemmaMedias;
-    }
 
     public String getIndexDirectory() { return IndexDirectory; }
     public String getDataDirectory() { return DataDirectory; }
