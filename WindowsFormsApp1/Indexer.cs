@@ -22,7 +22,6 @@ public class Indexer : IDisposable
 {
     public String IndexDirectory = "Index";
     public String DataDirectory = "Data";
-    private int offset = 0;
 
     private Lemma_MediaTableAdapter lmta = new Lemma_MediaTableAdapter();
     
@@ -53,15 +52,13 @@ public class Indexer : IDisposable
     {
         List<LemmaMedia> media = GetLemmaMedias();
         int lemmaMediaCount = (int)lmta.CountLemmaMediaRows();
-        while(offset < lemmaMediaCount)
-        {
-            DataTable results = GetLemmaAndMedia(offset);
+        
+            DataTable results = GetLemmaAndMedia();
             foreach (DataRow name in results.Rows)
             {
                 IndexFile(name);
             }
-            offset += 100;
-        }
+        
         Dispose();
         return writer.NumDocs();
         
@@ -105,7 +102,7 @@ public class Indexer : IDisposable
     private List<LemmaMedia> GetLemmaMedias()
     {
         List<LemmaMedia> lemmaMedias = new List<LemmaMedia>();
-        DataTable results = GetLemmaAndMedia(offset); 
+        DataTable results = GetLemmaAndMedia(); 
 
         Lemma l = null;
         Lemma old = null;
@@ -153,13 +150,13 @@ public class Indexer : IDisposable
     public String getDataDirectory() { return DataDirectory; }
 
 
-    private DataTable GetLemmaAndMedia(int offset)
+    private DataTable GetLemmaAndMedia()
     {
         DataTable dataTable = new DataTable();
         OleDbDataReader reader;
         string query = "SELECT lm.LemmaID, lm.MediaID, l.ID AS LID, l.Lname, m.ID AS MID, m.data_type AS dataType, m.Contect" +
                         " FROM((Lemma_Media lm INNER JOIN Lemma l ON l.ID = lm.LemmaID) INNER JOIN" +
-                        " Media m ON m.ID = lm.MediaID) LIMIT 100 OFFSET " + offset;
+                        " Media m ON m.ID = lm.MediaID)";
         using (OleDbConnection myCon = new OleDbConnection(WindowsFormsApp1.Properties.Settings.Default.FinalConnectionString))
         {
             myCon.Open();
