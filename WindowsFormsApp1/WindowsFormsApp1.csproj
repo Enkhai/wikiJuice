@@ -77,9 +77,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassesForIndexer\Lemma.cs" />
-    <Compile Include="ClassesForIndexer\LemmaMedia.cs" />
-    <Compile Include="ClassesForIndexer\Media.cs" />
     <Compile Include="consoleWriters.cs" />
     <Compile Include="Dir_.cs" />
     <Compile Include="Form1.cs">
