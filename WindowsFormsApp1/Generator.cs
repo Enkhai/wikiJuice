@@ -123,8 +123,15 @@ namespace WindowsFormsApp1
 
             Dir_.SetDirectory("..");
 
-            //Finalize by properly indexing the Database
-            using (Indexer indexer = new Indexer()) { Console.WriteLine($"Number of indexed lemmas: {indexer.Index()}"); }
+            //Finalize by creating indexers the Database
+            using (Indexer indexer = new Indexer())
+            {
+                //Create index for the Lemma-Media table
+                //Console.WriteLine($"Number of indexed lemmas: {indexer.Index()}");
+                //Create index for the categories
+                Console.Write($"Number of indexed categories: {indexer.IndexCategories()}");
+            }
+
         }
 
         //Fills the database for every lemma of a category
