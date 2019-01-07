@@ -14,7 +14,6 @@ using WindowsFormsApp1.InformatiCS_LibraryDataSetTableAdapters;
 using System.Data.Common;
 using System.Data;
 using System.Windows.Forms;
-using WindowsFormsApp1.ClassesForIndexer;
 using static WindowsFormsApp1.InformatiCS_LibraryDataSet;
 using System.Data.OleDb;
 
