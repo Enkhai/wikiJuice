@@ -16,12 +16,13 @@ using System.Data;
 using System.Windows.Forms;
 using WindowsFormsApp1.ClassesForIndexer;
 using static WindowsFormsApp1.InformatiCS_LibraryDataSet;
+using System.Data.OleDb;
 
 public class Indexer : IDisposable
 {
     public String IndexDirectory = "Index";
     public String DataDirectory = "Data";
-
+    private int offset = 0;
 
     private Lemma_MediaTableAdapter lmta = new Lemma_MediaTableAdapter();
     
@@ -51,12 +52,16 @@ public class Indexer : IDisposable
     public int Index()
     {
         List<LemmaMedia> media = GetLemmaMedias();
-        DataTable results = lmta.GetLemmaAndMedia();
-        foreach (DataRow name in results.Rows)
+        int lemmaMediaCount = (int)lmta.CountLemmaMediaRows();
+        while(offset < lemmaMediaCount)
         {
-            IndexFile(name);
+            DataTable results = GetLemmaAndMedia(offset);
+            foreach (DataRow name in results.Rows)
+            {
+                IndexFile(name);
+            }
+            offset += 100;
         }
-        
         Dispose();
         return writer.NumDocs();
         
@@ -100,7 +105,7 @@ public class Indexer : IDisposable
     private List<LemmaMedia> GetLemmaMedias()
     {
         List<LemmaMedia> lemmaMedias = new List<LemmaMedia>();
-        DataTable results = lmta.GetLemmaAndMedia(); 
+        DataTable results = GetLemmaAndMedia(offset); 
 
         Lemma l = null;
         Lemma old = null;
@@ -147,4 +152,22 @@ public class Indexer : IDisposable
     public String getIndexDirectory() { return IndexDirectory; }
     public String getDataDirectory() { return DataDirectory; }
 
+
+    private DataTable GetLemmaAndMedia(int offset)
+    {
+        DataTable dataTable = new DataTable();
+        OleDbDataReader reader;
+        string query = "SELECT lm.LemmaID, lm.MediaID, l.ID AS LID, l.Lname, m.ID AS MID, m.data_type AS dataType, m.Contect" +
+                        " FROM((Lemma_Media lm INNER JOIN Lemma l ON l.ID = lm.LemmaID) INNER JOIN" +
+                        " Media m ON m.ID = lm.MediaID) LIMIT 100 OFFSET " + offset;
+        using (OleDbConnection myCon = new OleDbConnection(WindowsFormsApp1.Properties.Settings.Default.FinalConnectionString))
+        {
+            myCon.Open();
+            OleDbCommand cmd = new OleDbCommand(query,myCon);
+            reader = cmd.ExecuteReader();
+            dataTable.Load(reader);
+            myCon.Close();
+        }
+        return dataTable;
+    }
 }
