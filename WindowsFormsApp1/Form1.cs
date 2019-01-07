@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -90,15 +91,22 @@ namespace WindowsFormsApp1
 
             //Start the timer and print the status every 3 seconds
             action_timer.Tick += new EventHandler(printStatus);
+            action_timer.Disposed += new EventHandler(completeGenerate);
             action_timer.Start();
 
             StatusTB.AppendText(Environment.NewLine + "Working..." + Environment.NewLine);
 
             //Start the generator
-            Generator.generate(usernameTB.Text, passwordTB.Text, searchItems, categories);
-            //Stop the timer once stopped
-            action_timer.Stop();
+            Task task = Task.Run(() =>
+            {
+                Generator.generate(usernameTB.Text, passwordTB.Text, searchItems, categories);
 
+                this.Invoke(new Action(() => action_timer.Dispose()));
+            });
+        }
+
+        private void completeGenerate(object sender, EventArgs e)
+        {
             //Print and save the report
             foreach (var value in Generator.getReport().Values)
             {
@@ -115,7 +123,6 @@ namespace WindowsFormsApp1
             //Re-enable the buttons
             generateButton.Enabled = true;
             saveButton.Enabled = true;
-
         }
 
         private void printStatus(object sender, EventArgs e)
@@ -139,5 +146,17 @@ namespace WindowsFormsApp1
             Dir_.SetDirectory(folderBrowserDialog1.SelectedPath);
         }
 
+        private void fileCategoriesButton_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+            System.IO.StreamReader sr = new System.IO.StreamReader(openFileDialog1.FileName);
+
+            string line;
+            while ((line = sr.ReadLine()) != null)
+            {
+                try { categoryList.Items.Add(line); }
+                catch { }
+            }
+        }
     }
 }

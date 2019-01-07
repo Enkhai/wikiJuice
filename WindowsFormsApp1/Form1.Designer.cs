@@ -53,6 +53,8 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.saveButton = new System.Windows.Forms.Button();
             this.infoTB = new System.Windows.Forms.TextBox();
+            this.fileCategoriesButton = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -158,7 +160,7 @@
             // 
             // categoryButton
             // 
-            this.categoryButton.Location = new System.Drawing.Point(34, 156);
+            this.categoryButton.Location = new System.Drawing.Point(34, 137);
             this.categoryButton.Name = "categoryButton";
             this.categoryButton.Size = new System.Drawing.Size(100, 23);
             this.categoryButton.TabIndex = 12;
@@ -263,12 +265,27 @@
             this.infoTB.Size = new System.Drawing.Size(118, 195);
             this.infoTB.TabIndex = 23;
             // 
+            // fileCategoriesButton
+            // 
+            this.fileCategoriesButton.Location = new System.Drawing.Point(28, 166);
+            this.fileCategoriesButton.Name = "fileCategoriesButton";
+            this.fileCategoriesButton.Size = new System.Drawing.Size(126, 23);
+            this.fileCategoriesButton.TabIndex = 24;
+            this.fileCategoriesButton.Text = "Add categories from file";
+            this.fileCategoriesButton.UseVisualStyleBackColor = true;
+            this.fileCategoriesButton.Click += new System.EventHandler(this.fileCategoriesButton_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.fileCategoriesButton);
             this.Controls.Add(this.infoTB);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.search_deleteButton);
@@ -323,6 +340,8 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.TextBox infoTB;
+        private System.Windows.Forms.Button fileCategoriesButton;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
