@@ -22,12 +22,32 @@ public class Indexer : IDisposable
 {
     public String IndexDirectory = "Index";
     public String DataDirectory = "Data";
+    public String CategoryIndexDirectory = "IndexCategory";
+
+    private IndexWriter writer;
+    private IndexWriter writerCategory;
+
 
     private Lemma_MediaTableAdapter lmta = new Lemma_MediaTableAdapter();
+    private Category_LemmaTableAdapter clta = new Category_LemmaTableAdapter();
     
     public Indexer()
     {
         Setup();
+        SetupCategory();
+    }
+
+    public void SetupCategory()
+    {
+        Directory dir = FSDirectory.Open(CategoryIndexDirectory);
+        try
+        {
+            writer = new IndexWriter(dir, new StandardAnalyzer(LVersion.LUCENE_30), IndexWriter.MaxFieldLength.UNLIMITED);
+        }
+        catch (Lucene.Net.Store.LockObtainFailedException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public void Setup()
@@ -47,7 +67,39 @@ public class Indexer : IDisposable
         writer.Dispose();
     }
 
+    public void DisposeCategory()
+    {
+        writerCategory.Dispose();
+    }
+
+    public int IndexCategories()
+    {
+        DataTable results = clta.GetCategoryAndLemmas();
+        foreach(DataRow row in results.Rows)
+        {
+            IndexCategory(row);
+        }
+        DisposeCategory();
+        return writerCategory.NumDocs();
+    }
     
+    private void IndexCategory(DataRow row)
+    {
+        Document document = GetCategoryDocument(row);
+        writerCategory.AddDocument(document);
+    }
+
+    private Document GetCategoryDocument(DataRow row)
+    {
+        Document doc = new Document();
+        doc.Add(new Field("CID", row["CategoryID"].ToString(), Field.Store.YES, Field.Index.NO));
+        doc.Add(new Field("LID", row["LemmaID"].ToString(), Field.Store.YES, Field.Index.NO));
+        doc.Add(new Field("Cname", row["Cname"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
+        doc.Add(new Field("title", row["Lname"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
+
+        return doc;
+    }
+
     public int Index()
     {        
         DataTable results = lmta.GetLemmaAndMedia();
@@ -80,7 +132,6 @@ public class Indexer : IDisposable
         return d;
     }
 
-    private IndexWriter writer;
 
     public String getIndexDirectory() { return IndexDirectory; }
     public String getDataDirectory() { return DataDirectory; }

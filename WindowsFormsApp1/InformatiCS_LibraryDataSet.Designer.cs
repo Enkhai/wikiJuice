@@ -4597,7 +4597,7 @@ namespace WindowsFormsApp1.InformatiCS_LibraryDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[2];
+            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[3];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT CategoryID, LemmaID FROM Category_Lemma";
@@ -4608,6 +4608,12 @@ namespace WindowsFormsApp1.InformatiCS_LibraryDataSetTableAdapters {
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("CategoryID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CategoryID", global::System.Data.DataRowVersion.Current, false, null));
             this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("LemmaID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "LemmaID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[2] = new global::System.Data.OleDb.OleDbCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = "SELECT cl.CategoryID, cl.LemmaID, l.Lname, c.Cname\r\nFROM   ((Category_Lemma cl IN" +
+                "NER JOIN\r\n             Lemma l ON cl.LemmaID = l.ID) INNER JOIN\r\n             Ca" +
+                "tegory c ON cl.CategoryID = c.ID)";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4629,6 +4635,17 @@ namespace WindowsFormsApp1.InformatiCS_LibraryDataSetTableAdapters {
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual InformatiCS_LibraryDataSet.Category_LemmaDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            InformatiCS_LibraryDataSet.Category_LemmaDataTable dataTable = new InformatiCS_LibraryDataSet.Category_LemmaDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual InformatiCS_LibraryDataSet.Category_LemmaDataTable GetCategoryAndLemmas() {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
             InformatiCS_LibraryDataSet.Category_LemmaDataTable dataTable = new InformatiCS_LibraryDataSet.Category_LemmaDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
